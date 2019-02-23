@@ -1,4 +1,6 @@
 {% load static %}
+{% url 'home' as home_url %}
+{% url 'setting-index' as setting_url %}
 <div class="sidebar" data-background-color="brown" data-active-color="danger">
     <!--
         Tip 1: you can change the color of the sidebar's background using: data-background-color="white | brown"
@@ -50,9 +52,15 @@
             </div>
         </div>
         <ul class="nav">
-            <li class="active">
+            <li {% if request.get_full_path == home_url %}class="active"{% endif %}>
                 <a href="{% url 'home' %}">
                     <i class="ti-panel"></i><p>Dashboard</p>
+                </a>
+            </li>
+
+            <li {% if request.get_full_path == setting_url %}class="active"{% endif %}>
+                <a href="{% url 'setting-index' %}">
+                    <i class="fa fa-gear"></i><p>Setting</p>
                 </a>
             </li>
         </ul>
