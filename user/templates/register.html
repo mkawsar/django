@@ -33,31 +33,6 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
     <link href="{% static 'css/themify-icons.css' %}" rel="stylesheet">
-    <style>
-        .parsley-required {
-            list-style: none;
-            margin-left: -39px;
-            color: #ff4a5b;
-        }
-
-        .parsley-type {
-            list-style: none;
-            margin-left: -39px;
-            color: #ff4a5b;
-        }
-
-        .parsley-minlength {
-            list-style: none;
-            margin-left: -39px;
-            color: #ff4a5b;
-        }
-
-        .parsley-equalto {
-            list-style: none;
-            margin-left: -39px;
-            color: #ff4a5b;
-        }
-    </style>
 </head>
 
 <body>
@@ -142,24 +117,24 @@
                                 <div class="content">
                                     <div class="form-group">
                                         <input type="text" name="first_name" placeholder="Your First Name"
-                                               class="form-control" required="required" data-parsley-trigger="change">
+                                               class="form-control" required="true">
                                     </div>
                                     <div class="form-group">
                                         <input type="text" name="last_name" placeholder="Your Last Name"
-                                               class="form-control" required="required" data-parsley-trigger="change">
+                                               class="form-control" required="true">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" name="username" placeholder="Username" class="form-control" required="required" data-parsley-trigger="change">
+                                        <input type="text" name="username" placeholder="Username" class="form-control" required="true">
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" name="email" placeholder="Enter email" class="form-control" required="required" data-parsley-trigger="change">
+                                        <input type="email" name="email" placeholder="Enter email" class="form-control" required="true">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" id="password1" name="password1" placeholder="Password"
-                                               class="form-control" required="required" data-parsley-trigger="change">
+                                               class="form-control" required="true" minlength="6">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="password2" placeholder="Password Confirmation" class="form-control" required="required" data-parsley-equalto="#password1" data-parsley-trigger="change">
+                                        <input type="password" name="password2" placeholder="Password Confirmation" class="form-control" required="true" equalTo="#password1">
                                     </div>
                                 </div>
                                 <div class="footer text-center">
@@ -195,14 +170,13 @@
 
 <!--  Forms Validations Plugin -->
 <script src="{% static 'js/jquery.validate.min.js' %}"></script>
-<script src="{% static 'js/parsley.min.js' %}"></script>
 <!-- Paper Dashboard PRO DEMO methods, don't include it in your project! -->
 <script src="{% static 'js/demo.js' %}"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
         demo.checkFullPageBackgroundImage();
-        $('#registrationFormValidation').parsley()
+        $('#registrationFormValidation').validate()
     });
 </script>
 
