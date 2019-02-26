@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 
@@ -21,4 +22,5 @@ def register(request):
 # Design of home page
 @login_required()
 def dashboard(request):
-    return render(request, 'home/dashboard.html', {'title': 'Home'})
+    users = User.objects.count()
+    return render(request, 'home/dashboard.html', {'title': 'Home', 'users': users})

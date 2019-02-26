@@ -8,7 +8,6 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="text-center">#</th>
                                 <th>Name</th>
                                 <th>Username</th>
                                 <th>Email</th>
@@ -17,26 +16,27 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for user in users %}
+                            {% for value in users %}
                                 <tr>
-                                    <td class="text-center">1</td>
-                                    <td>{{ user.first_name }} {{ user.last_name }}</td>
-                                    <td>{{ user.username }}</td>
-                                    <td>{{ user.email }}</td>
+                                    <td>{{ value.first_name }} {{ value.last_name }}</td>
+                                    <td>{{ value.username }}</td>
+                                    <td>{{ value.email }}</td>
                                     <td class="text-right">€ 99,225</td>
                                     <td class="td-actions text-right">
                                         <a href="#" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs"
                                            data-original-title="View Profile">
                                             <i class="ti-user"></i>
                                         </a>
-                                        <a href="#" rel="tooltip" title="" class="btn btn-success btn-simple btn-xs"
+                                        <a href="{{ value.id }}" rel="tooltip" title="" class="btn btn-success btn-simple btn-xs"
                                            data-original-title="Edit Profile">
                                             <i class="ti-pencil-alt"></i>
                                         </a>
-                                        <a href="#" rel="tooltip" title="" class="btn btn-danger btn-simple btn-xs"
-                                           data-original-title="Remove">
-                                            <i class="ti-close"></i>
-                                        </a>
+                                        {% if user.username != value.username %}
+                                            <a href="#" rel="tooltip" title="" class="btn btn-danger btn-simple btn-xs"
+                                               data-original-title="Remove">
+                                                <i class="ti-close"></i>
+                                            </a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}
