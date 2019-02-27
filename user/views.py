@@ -22,5 +22,5 @@ def register(request):
 # Design of home page
 @login_required()
 def dashboard(request):
-    users = User.objects.count()
-    return render(request, 'home/dashboard.html', {'title': 'Home', 'users': users})
+    user_count = User.objects.count()
+    return render(request, 'home/dashboard.html', {'title': 'Home', 'user_count': user_count})
