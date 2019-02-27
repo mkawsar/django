@@ -9,7 +9,7 @@
                     </div>
                     <div class="card-content">
                         {% comment %}<pre>{{ context.u_form }}</pre>{% endcomment %}
-                        <form class="form-horizontal" method="POST">
+                        <form class="form-horizontal" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="first_name" class="col-sm-2">First Name</label>
