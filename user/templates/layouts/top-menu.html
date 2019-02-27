@@ -10,8 +10,12 @@
                 <span class="icon-bar bar2"></span>
                 <span class="icon-bar bar3"></span>
             </button>
-            <a class="navbar-brand" href="#Dashboard">
-                Overview
+            <a class="navbar-brand" href="javascript:void(0)">
+                {% if title %}
+                    {{ title }}
+                {% else %}
+                    Django
+                {% endif %}
             </a>
         </div>
         <div class="collapse navbar-collapse">
