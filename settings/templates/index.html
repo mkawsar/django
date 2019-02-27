@@ -1,6 +1,7 @@
 {% extends 'layouts/main.html' %}
 {% block content %}
     <div class="container-fluid">
+        {% include 'layouts/alert-message.html' %}
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -27,7 +28,8 @@
                                            data-original-title="View Profile">
                                             <i class="ti-user"></i>
                                         </a>
-                                        <a href="{{ value.id }}" rel="tooltip" title="" class="btn btn-success btn-simple btn-xs"
+                                        <a href="{{ value.id }}" rel="tooltip" title=""
+                                           class="btn btn-success btn-simple btn-xs"
                                            data-original-title="Edit Profile">
                                             <i class="ti-pencil-alt"></i>
                                         </a>
