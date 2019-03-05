@@ -1,0 +1,53 @@
+{% extends 'layouts/main.html' %}
+{% block content %}
+    <div class="container-fluid">
+        {% include 'layouts/alert-message.html' %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <form class="form-horizontal" id="addBlogPostFormValidation" method="POST">
+                        {% csrf_token %}
+                        <div class="card-content">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Post Title</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" name="title"
+                                               placeholder="Post Title" required="required"
+                                               aria-required="true">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Post Content</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" type="text" name="content"
+                                               placeholder="Post Content" required="required"
+                                               aria-required="true"></textarea>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-info btn-fill">Submit</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('#addBlogPostFormValidation').validate();
+        });
+    </script>
+{% endblock script %}

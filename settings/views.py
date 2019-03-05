@@ -17,6 +17,11 @@ class UserListView(LoginRequiredMixin, ListView):
     ordering = ['first_name']
     paginate_by = 5
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Settings'
+        return context
+
 
 # Add new user
 @login_required()
