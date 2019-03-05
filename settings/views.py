@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.views.generic import (
     ListView
 )
-from user.forms import UserRegisterForm
+from user.forms import UserRegisterForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -44,3 +44,16 @@ def delete_user(request, user_id):
     except Exception as e:
         messages.error(request, 'Failed to user delete!')
         return redirect('setting-index')
+
+
+# User update
+@login_required()
+def edit_user(request, user_id):
+    users = User.objects.get(id=user_id)
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=users)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User updated by admin is successfully!')
+            return redirect('setting-index')
+    return render(request, 'user/edit.html', {'title': 'Edit User', 'users': users})
