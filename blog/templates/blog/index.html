@@ -5,7 +5,33 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <pre>{{ posts }}</pre>
+                    <div class="card-content">
+                        {% for post in posts %}
+                            <div style="margin-top: -22px;">
+                            <div class="card-header">
+                                <a href="{{ post.slug }}" class="post-title">
+                                    <h2>{{ post.title }}</h2>
+                                </a>
+                                <div>
+                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-comment-o"></i> <span>Comments</span></a>
+                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-thumbs-up"></i> <span>Like</span></a>
+                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-calendar"></i> <span>{{ post.date_posted|date:"F d, Y" }}</span></a>
+                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-user"></i> <span>{{ post.author.first_name|title }}</span></a>
+                                </div>
+                            </div>
+
+                            <div class="card-content">
+                                {{ post.content }}
+                            </div>
+                            <hr>
+                        </div>
+                        {% endfor %}
+
+                        <!-- Pager -->
+                        <div class="clearfix">
+                            <a class="btn btn-primary float-right" href="#">Older Posts →</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -110,3 +110,11 @@ body.nude {
     font-size: 14px;
     font-weight: 500;
 }
+
+.post-attribute {
+    margin-right: 12px;
+}
+
+.post-title {
+    font-size: 10px;
+}

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
+from blog.models import Post
 from django.contrib.auth.decorators import login_required
 
 
@@ -23,7 +24,8 @@ def register(request):
 @login_required()
 def dashboard(request):
     user_count = User.objects.count()
-    return render(request, 'home/dashboard.html', {'title': 'Home', 'user_count': user_count})
+    post_count = Post.objects.count()
+    return render(request, 'home/dashboard.html', {'title': 'Home', 'user_count': user_count, 'post_count': post_count})
 
 
 @login_required()
