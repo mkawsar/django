@@ -9,7 +9,7 @@
                         {% for post in posts %}
                             <div style="margin-top: -22px;">
                             <div class="card-header">
-                                <a href="{{ post.slug }}" class="post-title">
+                                <a href="{% url 'blog-detail' post.slug %}" class="post-title">
                                     <h2>{{ post.title }}</h2>
                                 </a>
                                 <div>
