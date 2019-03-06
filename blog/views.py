@@ -1,19 +1,16 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.views.generic import (
-    ListView, CreateView, DetailView
-)
+from django.views import generic
 from .models import *
 
 
 # Blog post list view
-class PostListView(LoginRequiredMixin, ListView):
+class PostListView(LoginRequiredMixin, generic.ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
-    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -22,7 +19,7 @@ class PostListView(LoginRequiredMixin, ListView):
 
 
 # Blog post create
-class PostCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
     fields = ['title', 'content']
     template_name = 'blog/create.html'
@@ -39,7 +36,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+class PostDetailView(LoginRequiredMixin, generic.DetailView):
     model = Post
     template_name = 'blog/details.html'
 

@@ -21,7 +21,7 @@
                             </div>
 
                             <div class="card-content">
-                                {{ post.content }}
+                                <p>{{ post.content|truncatewords:50 }} <a href="{% url 'blog-detail' post.slug %}" class="btn btn-sm btn-info">Details</a></p>
                             </div>
                             <hr>
                         </div>
