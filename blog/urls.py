@@ -6,4 +6,5 @@ urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
     path('create', PostCreateView.as_view(), name='blog-create'),
     path('details/<slug>', PostDetailView.as_view(), name='blog-detail'),
+    path('post/like/<post_id>', post_like, name='post-like')
 ]

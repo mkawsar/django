@@ -14,7 +14,7 @@
                                 </a>
                                 <div>
                                     <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-comment-o"></i> <span>Comments</span></a>
-                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-thumbs-up"></i> <span>Like</span></a>
+                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-thumbs-up"></i> <span>Like {{ post.like_count }}</span></a>
                                     <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-calendar"></i> <span>{{ post.date_posted|date:"F d, Y" }}</span></a>
                                     <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-user"></i> <span>{{ post.author.first_name|title }}</span></a>
                                 </div>

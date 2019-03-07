@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import generic
 from .models import *
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Blog post list view
@@ -44,3 +46,19 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Post Details'
         return context
+
+
+@login_required()
+@csrf_exempt
+def post_like(request, post_id):
+    if request.is_ajax():
+        data = request.POST
+        post_like = PostLike.objects.filter(post_id=post_id).first()
+        if post_like is None:
+            like = PostLike(like=data['likeCount'], post_id=post_id)
+            like.save()
+            Post.objects.filter(id=data['postID']).update(like=like.id)
+        else:
+            PostLike.objects.filter(post_id=post_id).update(like=data['likeCount'])
+
+        return HttpResponse(data)
