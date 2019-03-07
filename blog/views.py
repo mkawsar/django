@@ -44,7 +44,10 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        post_id = context['post'].pk
         context['title'] = 'Post Details'
+        context['dislike'] = Dislike.objects.filter(post_id=post_id)
+        context['user_dislike'] = Dislike.objects.filter(post_id=post_id).filter(user_id=self.request.user.id).first()
         return context
 
 
@@ -62,3 +65,16 @@ def post_like(request, post_id):
             PostLike.objects.filter(post_id=post_id).update(like=data['likeCount'])
 
         return HttpResponse(data)
+
+
+@login_required()
+@csrf_exempt
+def post_dislike(request, post_id):
+    if request.is_ajax():
+        user_dislike = Dislike.objects.filter(user_id=request.user.id).filter(post_id=post_id).first()
+        if user_dislike is None:
+            dislike = Dislike(dislike=1, post_id=post_id, user_id=request.user.id)
+            dislike.save()
+            return HttpResponse(True)
+        else:
+            return HttpResponse(False)

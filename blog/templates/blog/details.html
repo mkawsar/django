@@ -14,10 +14,15 @@
                         </h5><br>
                         <p align="justify">{{ object.content }}</p>
                         <hr/>
-                        <a href="javascript:void(0)" data-like-id="{{ object.id }}" class="btn btn-info btn-fill like-btn"><i class="fa fa-thumbs-up"></i> Like
+                        <a href="javascript:void(0)" data-post-id="{{ object.id }}" class="btn btn-info btn-fill like-btn"><i class="fa fa-thumbs-up"></i> Like
                             <input class="like" name="like" readonly="readonly" type="text" placeholder="{{ object.like_count }}" value="{{ object.like_count }}"/></a>
-                        <a href="javascript:void(0)" data-dislike-id="{{ object.id }}" class="btn btn-danger btn-fill dislike-btn"><i class="fa fa-thumbs-down"></i>
-                            Dislike <input class="dislike" name="dislike" readonly="readonly" type="text" placeholder="0" value="0"/></a>
+                        {% if user_dislike.user_id ==  object.author.id%}
+                            <a href="javascript:void(0)" data-id="{{ object.id }}" class="btn btn-danger btn-fill"><i class="fa fa-thumbs-down"></i>
+                                Dislike <input class="dislike" name="dislike" readonly="readonly" type="text" placeholder="{{ dislike.count }}" value="{{ dislike.count }}"/></a>
+                        {% else %}
+                            <a href="javascript:void(0)" data-id="{{ object.id }}" class="btn btn-danger btn-fill dislike-btn"><i class="fa fa-thumbs-down"></i>
+                                Dislike <input class="dislike" name="dislike" readonly="readonly" type="text" placeholder="{{ dislike.count }}" value="{{ dislike.count }}"/></a>
+                        {% endif %}
                         <hr/>
 
                         <h4>Leave a Comment:</h4>
@@ -89,7 +94,7 @@
                 let input = $(this).find('.like');
                 input.val(parseInt(input.val()) + 1);
                 let likeCount = parseInt(input.val());
-                let postId = $(this).attr('data-like-id');
+                let postId = $(this).attr('post-data-id');
                 let url = '/blog/post/like/' + postId;
                 $.ajax({
                     type: 'POST',
@@ -106,21 +111,17 @@
             });
             $(".dislike-btn").click(function () {
                 let input = $(this).find('.dislike');
-                input.val(parseInt(input.val()) + 1);
-                {% comment %}let post = $(this).find('.postID');
-                let like = parseInt(input.val());
-                let postID = post.val();
+                let postId = $(this).attr('data-id');
+                let url = '/blog/post/dislike/' + postId;
                 $.ajax({
-                    type: 'GET',
-                    url: '/post/dislike',
-                    data: {
-                        total: like,
-                        postID: postID,
-                    },
+                    type: 'POST',
+                    url: url,
                     success: function (data) {
-                        console.log(data);
+                        if (data === 'True') {
+                            input.val(parseInt(input.val()) + 1);
+                        }
                     }
-                });{% endcomment %}
+                });
             });
         });
     </script>

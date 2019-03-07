@@ -31,3 +31,11 @@ class Post(models.Model):
         if self.like is None:
             return 0
         return self.like.like
+
+
+class Dislike(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    dislike = models.CharField(max_length=255)
+    createdAt = models.DateTimeField(default=timezone.now)
+    updatedAt = models.DateTimeField(default=timezone.now)
