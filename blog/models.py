@@ -4,20 +4,11 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
 
-# Post like model
-class PostLike(models.Model):
-    post_id = models.IntegerField(null=True, blank=True)
-    like = models.CharField(max_length=255, null=True, blank=True)
-    createdAt = models.DateTimeField(default=timezone.now)
-    updatedAt = models.DateTimeField(default=timezone.now)
-
-
 # Create Post models.
 class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     slug = models.SlugField(null=True, blank=True)
-    like = models.OneToOneField(PostLike, on_delete=models.DO_NOTHING, null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -28,14 +19,20 @@ class Post(models.Model):
 
     @property
     def like_count(self):
-        if self.like is None:
-            return 0
-        return self.like.like
+        return Like.objects.filter(post_id=self).count()
 
 
 class Dislike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dislike = models.CharField(max_length=255)
+    createdAt = models.DateTimeField(default=timezone.now)
+    updatedAt = models.DateTimeField(default=timezone.now)
+
+
+class Like(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    like = models.CharField(max_length=255)
     createdAt = models.DateTimeField(default=timezone.now)
     updatedAt = models.DateTimeField(default=timezone.now)

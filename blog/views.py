@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -15,7 +15,7 @@ class PostListView(LoginRequiredMixin, generic.ListView):
     ordering = ['-date_posted']
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(PostListView, self).get_context_data(**kwargs)
         context['title'] = 'Blog'
         return context
 
@@ -46,6 +46,8 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         post_id = context['post'].pk
         context['title'] = 'Post Details'
+        context['like'] = Like.objects.filter(post_id=post_id)
+        context['user_like'] = Like.objects.filter(post_id=post_id).filter(user_id=self.request.user.id).first()
         context['dislike'] = Dislike.objects.filter(post_id=post_id)
         context['user_dislike'] = Dislike.objects.filter(post_id=post_id).filter(user_id=self.request.user.id).first()
         return context
@@ -55,16 +57,13 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
 @csrf_exempt
 def post_like(request, post_id):
     if request.is_ajax():
-        data = request.POST
-        post_like = PostLike.objects.filter(post_id=post_id).first()
-        if post_like is None:
-            like = PostLike(like=data['likeCount'], post_id=post_id)
+        user_like = Like.objects.filter(user_id=request.user.id).filter(post_id=post_id).first()
+        if user_like is None:
+            like = Like(like=1, post_id=post_id, user_id=request.user.id)
             like.save()
-            Post.objects.filter(id=data['postID']).update(like=like.id)
+            return HttpResponse(True)
         else:
-            PostLike.objects.filter(post_id=post_id).update(like=data['likeCount'])
-
-        return HttpResponse(data)
+            return HttpResponse(False)
 
 
 @login_required()

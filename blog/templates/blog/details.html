@@ -14,8 +14,13 @@
                         </h5><br>
                         <p align="justify">{{ object.content }}</p>
                         <hr/>
-                        <a href="javascript:void(0)" data-post-id="{{ object.id }}" class="btn btn-info btn-fill like-btn"><i class="fa fa-thumbs-up"></i> Like
-                            <input class="like" name="like" readonly="readonly" type="text" placeholder="{{ object.like_count }}" value="{{ object.like_count }}"/></a>
+                        {% if user_dislike.user_id ==  object.author.id%}
+                            <a href="javascript:void(0)" data-post-id="{{ object.id }}" class="btn btn-info btn-fill"><i class="fa fa-thumbs-up"></i> Like
+                                <input class="like" name="like" readonly="readonly" type="text" placeholder="{{ like.count }}" value="{{ like.count }}"/></a>
+                        {% else %}
+                            <a href="javascript:void(0)" data-post-id="{{ object.id }}" class="btn btn-info btn-fill like-btn"><i class="fa fa-thumbs-up"></i> Like
+                            <input class="like" name="like" readonly="readonly" type="text" placeholder="{{ like.count }}" value="{{ like.count }}"/></a>
+                        {% endif %}
                         {% if user_dislike.user_id ==  object.author.id%}
                             <a href="javascript:void(0)" data-id="{{ object.id }}" class="btn btn-danger btn-fill"><i class="fa fa-thumbs-down"></i>
                                 Dislike <input class="dislike" name="dislike" readonly="readonly" type="text" placeholder="{{ dislike.count }}" value="{{ dislike.count }}"/></a>
@@ -94,16 +99,11 @@
                 let input = $(this).find('.like');
                 input.val(parseInt(input.val()) + 1);
                 let likeCount = parseInt(input.val());
-                let postId = $(this).attr('post-data-id');
+                let postId = $(this).attr('data-post-id');
                 let url = '/blog/post/like/' + postId;
                 $.ajax({
                     type: 'POST',
                     url: url,
-                    data: {
-                        likeCount: likeCount,
-                        postID: postId,
-                        userId: {{ object.author.id }}
-                    },
                     success: function (data) {
                         console.log(data);
                     }
