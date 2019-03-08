@@ -1,4 +1,5 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -50,6 +51,7 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
         context['user_like'] = Like.objects.filter(post_id=post_id).filter(user_id=self.request.user.id).first()
         context['dislike'] = Dislike.objects.filter(post_id=post_id)
         context['user_dislike'] = Dislike.objects.filter(post_id=post_id).filter(user_id=self.request.user.id).first()
+        context['comments'] = Comment.objects.filter(post_id=post_id).order_by('-createdAt')
         return context
 
 
@@ -77,3 +79,12 @@ def post_dislike(request, post_id):
             return HttpResponse(True)
         else:
             return HttpResponse(False)
+
+
+@login_required()
+def comment(request):
+    if request.method == 'POST':
+        comment = Comment(post_id=request.POST['post_id'], comment=request.POST['comment'], user_id=request.user.id)
+        comment.save()
+        messages.success(request, 'Post comment added is successfully!')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

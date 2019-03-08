@@ -21,6 +21,10 @@ class Post(models.Model):
     def like_count(self):
         return Like.objects.filter(post_id=self).count()
 
+    @property
+    def comment_count(self):
+        return Comment.objects.filter(post_id=self).count()
+
 
 class Dislike(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -34,5 +38,13 @@ class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     like = models.CharField(max_length=255)
+    createdAt = models.DateTimeField(default=timezone.now)
+    updatedAt = models.DateTimeField(default=timezone.now)
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
     createdAt = models.DateTimeField(default=timezone.now)
     updatedAt = models.DateTimeField(default=timezone.now)
