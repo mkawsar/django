@@ -6,7 +6,18 @@
 3. Web Server (Ex. Apache, Ngnix)
 4. PostgreSQL
 5. pgAdmin (Optional)
+6. psycopg2 (if not install in your local environment)
 
+    `sudo apt-get install python3-Psycopg2`
+    
+    1. if pip not install
+    
+        ` sudo apt-get install python3-pip`
+    
+    2. Now you can install Psycopg2 using pip3
+    
+        `sudo pip3 install Psycopg2`
+    
 # Project Setup
 1. Clone this project using this command below:
 
