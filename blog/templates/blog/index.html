@@ -8,23 +8,23 @@
                     <div class="card-content">
                         {% for post in posts %}
                             <div style="margin-top: -22px;">
-                            <div class="card-header">
-                                <a href="{% url 'blog-detail' post.slug %}" class="post-title">
-                                    <h2>{{ post.title }}</h2>
-                                </a>
-                                <div>
-                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-comment-o"></i> <span>Comments {{ post.comment_count }}</span></a>
-                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-thumbs-up"></i> <span>Like {{ post.like_count }}</span></a>
-                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-calendar"></i> <span>{{ post.date_posted|date:"F d, Y" }}</span></a>
-                                    <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-user"></i> <span>{{ post.author.first_name|title }}</span></a>
+                                <div class="card-header">
+                                    <a href="{% url 'blog-detail' post.slug %}" class="post-title">
+                                        <h2>{{ post.title }}</h2>
+                                    </a>
+                                    <div>
+                                        <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-comment-o"></i> <span>Comments {{ post.comment_count }}</span></a>
+                                        <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-thumbs-up"></i> <span>Like {{ post.like_count }}</span></a>
+                                        <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-calendar"></i> <span>{{ post.date_posted|date:"F d, Y" }}</span></a>
+                                        <a href="javascript:void(0)" class="post-attribute"><i class="fa fa-user"></i> <span>{{ post.author.first_name|title }}</span></a>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="card-content">
-                                <p>{{ post.content|truncatewords:50 }} <a href="{% url 'blog-detail' post.slug %}" class="btn btn-sm btn-info">Details</a></p>
+                                <div class="card-content">
+                                    <p>{{ post.content|truncatewords:50|safe }} <a href="{% url 'blog-detail' post.slug %}" class="btn btn-sm btn-info">Details</a></p>
+                                </div>
+                                <hr>
                             </div>
-                            <hr>
-                        </div>
                         {% endfor %}
 
                         <!-- Pager -->

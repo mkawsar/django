@@ -88,3 +88,27 @@ def comment(request):
         comment.save()
         messages.success(request, 'Post comment added is successfully!')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Post
+    fields = ['title', 'content']
+    template_name = 'blog/edit.html'
+    success_url = '/blog/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Post Update'
+        context['object'] = Post.objects.filter(id=context['post'].pk).first()
+        return context
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        messages.success(self.request, 'Post item updated successfully!')
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False

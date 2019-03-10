@@ -160,3 +160,7 @@ body.nude {
     width: 20px;
     background: transparent;
 }
+
+.btn-right {
+    margin-right: 5px;
+}
