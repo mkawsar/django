@@ -25,9 +25,8 @@
                                     <td>{{ value.username }}</td>
                                     <td>{{ value.email }}</td>
                                     <td class="td-actions text-right">
-                                        <a href="#" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs"
-                                           data-original-title="View Profile">
-                                            <i class="ti-user"></i>
+                                        <a href="{% url 'user-details' value.id %}" rel="tooltip" title="" class="btn btn-info btn-simple btn-xs"
+                                           data-original-title="View Profile"><i class="ti-user"></i>
                                         </a>
                                         <a href="{% url 'user-edit' value.id %}" rel="tooltip" title=""
                                            class="btn btn-success btn-simple btn-xs"

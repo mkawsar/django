@@ -1,9 +1,11 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from blog.models import Post
 from django.contrib.auth.decorators import login_required
+from django.views import generic
 
 
 # Registration page and store
@@ -39,3 +41,15 @@ def profile(request):
             messages.success(request, 'Your account has been updated.')
             return redirect('profile')
     return render(request, 'profile/index.html', {'title': 'Profile Edit'})
+
+
+class UserDetailsView(LoginRequiredMixin, generic.DeleteView):
+    model = User
+    template_name = 'user/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserDetailsView, self).get_context_data(**kwargs)
+        context['title'] = 'User Page'
+        user_id = context['user'].pk
+        context['posts'] = Post.objects.filter(author_id=user_id).all()
+        return context
