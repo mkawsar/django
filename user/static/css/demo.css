@@ -164,3 +164,7 @@ body.nude {
 .btn-right {
     margin-right: 5px;
 }
+
+.required-field {
+    color: #ff4b5a;
+}

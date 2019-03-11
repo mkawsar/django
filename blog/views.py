@@ -92,7 +92,7 @@ def comment(request):
 
 class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'tags']
     template_name = 'blog/edit.html'
     success_url = '/blog/'
 

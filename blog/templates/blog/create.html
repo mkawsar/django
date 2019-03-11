@@ -1,4 +1,13 @@
 {% extends 'layouts/main.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'bootstrap-tags/bootstrap-tagsinput.css' %}">
+    <style>
+        .bootstrap-tagsinput {
+            display: block;
+        }
+    </style>
+{% endblock style %}
 {% block content %}
     <div class="container-fluid">
         {% include 'layouts/alert-message.html' %}
@@ -10,21 +19,33 @@
                         <div class="card-content">
                             <fieldset>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Post Title</label>
+                                    <label class="col-sm-2 control-label">Post Title <span
+                                            class="required-field">*</span></label>
                                     <div class="col-sm-10">
                                         <input class="form-control" type="text" name="title"
-                                               placeholder="Post Title" required="required"
-                                               aria-required="true">
+                                               placeholder="Post Title" required="required" aria-required="true">
                                     </div>
                                 </div>
                             </fieldset>
+
                             <fieldset>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Post Content</label>
+                                    <label class="col-sm-2 control-label">Post Tags <span class="required-field">*</span></label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" type="text" name="content"
-                                               placeholder="Post Content" required="required"
-                                               aria-required="true"></textarea>
+                                        <input class="form-control" type="text" data-role="tagsinput"  id="tags" name="tags"
+                                               placeholder="Post Tags" required="required" aria-required="true">
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Post Content <span
+                                            class="required-field">*</span></label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="editor" type="text" name="content"
+                                                  placeholder="Post Content" required="required"
+                                                  aria-required="true"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
@@ -45,8 +66,18 @@
     </div>
 {% endblock %}
 {% block script %}
+    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+    <script src="{% static 'bootstrap-tags/bootstrap-tagsinput.min.js' %}"></script>
     <script>
         $(document).ready(function () {
+            $('#tags').tagsinput();
+            CKEDITOR.editorConfig = function (config) {
+                config.language = 'es';
+                config.uiColor = '#F7B42C';
+                config.height = 300;
+                config.toolbarCanCollapse = true;
+            };
+            CKEDITOR.replace('editor');
             $('#addBlogPostFormValidation').validate();
         });
     </script>

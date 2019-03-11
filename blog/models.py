@@ -9,6 +9,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     slug = models.SlugField(null=True, blank=True)
+    tags = models.CharField(max_length=255, null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -16,6 +17,10 @@ class Post(models.Model):
         if not self.id:
             self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
+
+    def split(self):
+        if self.tags is not None:
+            return self.tags.split(',')
 
     @property
     def like_count(self):

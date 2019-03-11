@@ -15,7 +15,10 @@
                         <h5><span class="fa fa-calendar"></span> Post by <img src="{{ object.author.profile.image.url }}" class="img-thumbnail img-circle post-user-img">
                             {{ object.author.first_name|title }}, {{ object.date_posted|date:"F d, Y" }}.
                         </h5>
-                        <h5><span class="label label-danger">Food</span> <span class="label label-primary">Ipsum</span>
+                        <h5>
+                            {% for tags in object.split %}
+                                <span class="label label-info">{{ tags }}</span>
+                            {% endfor %}
                         </h5><br>
                         <p align="justify">{{ object.content|safe }}</p>
                         <hr/>
