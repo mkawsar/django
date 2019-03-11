@@ -9,7 +9,7 @@
                         <h2>{{ object.title }}
                             {% if user.id == object.author.id %}
                                 <a href="{% url 'post-update' object.slug %}" class="btn btn-sm btn-info pull-right"><i class="fa fa-pencil-square-o"></i></a>
-                                <a href="javascript:void(0)" class="btn btn-sm btn-danger pull-right btn-right confirm"><i class="fa fa-trash-o"></i></a>
+                                <a href="{% url 'post-delete' object.slug %}" class="btn btn-sm btn-danger pull-right btn-right confirm"><i class="fa fa-trash-o"></i></a>
                             {% endif %}
                         </h2>
                         <h5><span class="fa fa-calendar"></span> Post by <img src="{{ object.author.profile.image.url }}" class="img-thumbnail img-circle post-user-img">

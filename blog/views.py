@@ -24,7 +24,7 @@ class PostListView(LoginRequiredMixin, generic.ListView):
 # Blog post create
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'tags']
     template_name = 'blog/create.html'
     success_url = '/blog/'
 
@@ -112,3 +112,11 @@ class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
         if self.request.user == post.author:
             return True
         return False
+
+
+@login_required()
+def delete(request, slug):
+    post = Post.objects.get(slug=slug)
+    post.delete()
+    messages.success(request, 'Post item deleted successfully!')
+    return HttpResponseRedirect("/blog/")
