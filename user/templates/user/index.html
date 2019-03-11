@@ -50,22 +50,26 @@
                     </div>
                     <div class="card-content">
                         <ul class="list-unstyled team-members">
-                            {% for post in posts %}
-                                <li>
-                                    <div class="row">
-                                        {% comment %}<div class="col-xs-3">
-                                            <div class="avatar">
-                                                <img src="{{ object.profile.image.url }}" alt="Circle Image"
-                                                     class="img-circle img-no-padding img-responsive">
+                            {% if posts|length > 0 %}
+                                {% for post in posts %}
+                                    <li>
+                                        <div class="row">
+                                            {% comment %}<div class="col-xs-3">
+                                                <div class="avatar">
+                                                    <img src="{{ object.profile.image.url }}" alt="Circle Image"
+                                                         class="img-circle img-no-padding img-responsive">
+                                                </div>
+                                            </div>{% endcomment %}
+                                            <div class="col-xs-10">{{ post.title }}</div>
+                                            <div class="col-xs-2 text-right">
+                                                <a href="{% url 'blog-detail' post.slug %}" class="btn btn-sm btn-success btn-icon"><i class="fa fa-eye"></i></a>
                                             </div>
-                                        </div>{% endcomment %}
-                                        <div class="col-xs-10">{{ post.title }}</div>
-                                        <div class="col-xs-2 text-right">
-                                            <a href="{% url 'blog-detail' post.slug %}" class="btn btn-sm btn-success btn-icon"><i class="fa fa-eye"></i></a>
                                         </div>
-                                    </div>
-                                </li>
-                            {% endfor %}
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                No post found
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

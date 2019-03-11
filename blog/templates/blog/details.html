@@ -13,7 +13,7 @@
                             {% endif %}
                         </h2>
                         <h5><span class="fa fa-calendar"></span> Post by <img src="{{ object.author.profile.image.url }}" class="img-thumbnail img-circle post-user-img">
-                            {{ object.author.first_name|title }}, {{ object.date_posted|date:"F d, Y" }}.
+                            <a href="{% url 'user-details' object.author_id %}">{{ object.author.first_name|title }}</a>, {{ object.date_posted|date:"F d, Y" }}.
                         </h5>
                         <h5>
                             {% for tags in object.split %}
