@@ -3,6 +3,7 @@
 {% url 'setting-index' as setting_url %}
 {% url 'blog-home' as blog_url %}
 {% url 'user-add' as add_user_url %}
+{% url 'group-index' as group_url %}
 <div class="sidebar" data-background-color="brown" data-active-color="danger">
     <div class="logo">
         <a href="/" class="simple-text logo-mini">
@@ -59,6 +60,12 @@
             <li {% if request.get_full_path == blog_url %}class="active"{% endif %}>
                 <a href="{% url 'blog-home' %}">
                     <i class="fa fa-rss"></i><p>Blog</p>
+                </a>
+            </li>
+
+            <li {% if request.get_full_path == group_url %}class="active"{% endif %}>
+                <a href="{% url 'group-index' %}">
+                    <i class="fa fa-sun-o"></i><p>Group</p>
                 </a>
             </li>
         </ul>
