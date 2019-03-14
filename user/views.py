@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from blog.models import Post
 from django.contrib.auth.decorators import login_required
 from django.views import generic
+from group.models import Group
 
 
 # Registration page and store
@@ -27,7 +28,8 @@ def register(request):
 def dashboard(request):
     user_count = User.objects.count()
     post_count = Post.objects.count()
-    return render(request, 'home/dashboard.html', {'title': 'Home', 'user_count': user_count, 'post_count': post_count})
+    public_group = Group.objects.filter(type='public').count()
+    return render(request, 'home/dashboard.html', {'title': 'Home', 'user_count': user_count, 'post_count': post_count, 'public_group': public_group})
 
 
 @login_required()

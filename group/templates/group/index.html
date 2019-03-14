@@ -5,7 +5,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="block-content-full" style="overflow: auto;">
-                    <pre>{{ user.id }}</pre>
                     {% for group in groups %}
                         {% if user.id == group.creator.id or group.type == 'public' %}
                             <div class="col-md-4">

@@ -13,7 +13,7 @@
                             </div>
                             <div class="col-xs-7">
                                 <div class="numbers">
-                                    <p>Users</p>
+                                    <p>User{{ user_count|pluralize:"s" }}</p>
                                     {{ user_count }}
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-xs-7">
                                 <div class="numbers">
-                                    <p>Total Post</p>
+                                    <p>Post{{ post_count|pluralize:"s" }}</p>
                                     {{ post_count }}
                                 </div>
                             </div>
@@ -58,13 +58,13 @@
                         <div class="row">
                             <div class="col-xs-5">
                                 <div class="icon-big icon-danger text-center">
-                                    <i class="ti-pulse"></i>
+                                    <i class="fa fa-sun-o"></i>
                                 </div>
                             </div>
                             <div class="col-xs-7">
                                 <div class="numbers">
-                                    <p>Errors</p>
-                                    23
+                                    <p>Group{{ public_group|pluralize:"s" }}</p>
+                                    {{ public_group }}
                                 </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                     <div class="card-footer">
                         <hr/>
                         <div class="stats">
-                            <i class="ti-timer"></i> In the last hour
+                            <i class="fa fa-sun-o"></i> Public Group
                         </div>
                     </div>
                 </div>
