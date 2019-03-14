@@ -5,27 +5,30 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="block-content-full" style="overflow: auto;">
+                    <pre>{{ user.id }}</pre>
                     {% for group in groups %}
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="widget">
-                                        <div class="widget-advanced">
-                                            <div class="widget-header text-center">
-                                                <img src="{{ group.picture.url }}" alt="background"
-                                                     class="widget-background animation-pulseSlow">
+                        {% if user.id == group.creator.id or group.type == 'public' %}
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="widget">
+                                            <div class="widget-advanced">
+                                                <div class="widget-header text-center">
+                                                    <img src="{{ group.picture.url }}" alt="background"
+                                                         class="widget-background animation-pulseSlow">
 
-                                                <h3 class="widget-content widget-content-image widget-content-light">
-                                                    <a href="#">{{ group.name }}</a>
-                                                    <br>
-                                                    <small>{{ group.about|truncatewords:5|safe }}</small>
-                                                </h3>
-                                            </div>
-                                            <div class="widget-main">
-                                                <div class="row text-center animation-fadeIn">
-                                                    <div>
-                                                        <h3><a href="#" class="btn btn-primary-proUi"><i
-                                                                class="fa fa-search"></i> <strong>View</strong></a></h3>
+                                                    <h3 class="widget-content widget-content-image widget-content-light">
+                                                        <a href="#">{{ group.name }}</a>
+                                                        <br>
+                                                        <small>{{ group.about|truncatewords:5|safe }}</small>
+                                                    </h3>
+                                                </div>
+                                                <div class="widget-main">
+                                                    <div class="row text-center animation-fadeIn">
+                                                        <div>
+                                                            <h3><a href="#" class="btn btn-primary-proUi"><i
+                                                                    class="fa fa-search"></i> <strong>View</strong></a></h3>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -33,7 +36,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
