@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'pythonunchained.urls'
+ROOT_URLCONF = 'community.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'pythonunchained.wsgi.application'
+WSGI_APPLICATION = 'community.wsgi.application'
 
 
 # Database
