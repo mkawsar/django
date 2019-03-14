@@ -172,3 +172,8 @@ body.nude {
 .radio-btn {
     margin-right: 35px;
 }
+
+.widget-background-group {
+    width: 100% !important;
+    height: 300px !important;
+}

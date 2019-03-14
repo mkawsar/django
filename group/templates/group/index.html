@@ -17,7 +17,7 @@
                                                          class="widget-background animation-pulseSlow">
 
                                                     <h3 class="widget-content widget-content-image widget-content-light">
-                                                        <a href="#">{{ group.name }}</a>
+                                                        <a href="{% url 'group-details' group.slug %}">{{ group.name }}</a>
                                                         <br>
                                                         <small>{{ group.about|truncatewords:5|safe }}</small>
                                                     </h3>
@@ -25,7 +25,7 @@
                                                 <div class="widget-main">
                                                     <div class="row text-center animation-fadeIn">
                                                         <div>
-                                                            <h3><a href="#" class="btn btn-primary-proUi"><i
+                                                            <h3><a href="{% url 'group-details' group.slug %}" class="btn btn-primary-proUi"><i
                                                                     class="fa fa-search"></i> <strong>View</strong></a></h3>
                                                         </div>
                                                     </div>

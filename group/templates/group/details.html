@@ -1,0 +1,55 @@
+{% extends 'layouts/main.html' %}
+{% block style %}
+    <style>
+        .profile-img-for-add-member {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+        }
+
+        .push-bit {
+            margin-bottom: 0;
+        }
+
+        .btn.cross-post-btn {
+            font-size: 10px;
+            background: transparent;
+            font-weight: normal;
+            padding: 0;
+        }
+    </style>
+{% endblock style %}
+{% block content %}
+    <div class="container-fluid">
+        {% include 'layouts/alert-message.html' %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="widget widget-group widget-group-custom">
+                            <div class="widget-advanced widget-advanced-alt">
+                                <div class="widget-header text-left widget-header-group">
+                                    <img src="{{ object.picture.url }}" alt="background"
+                                         class="widget-background widget-background-group img-responsive">
+                                    <h3 class="widget-content widget-content-image-bottom widget-content-light clearfix">
+                                        <a href="javascript:void(0)" class="widget-icon pull-right" data-toggle="modal"
+                                           data-target="#upload-group-image">
+                                            <i class="fa fa-camera" aria-hidden="true"></i>
+                                        </a>
+                                        <a href="javascript:void(0)"
+                                           class="themed-color-default"><strong>{{ object.name }}</strong></a><br>
+                                        {% if object.type == 'private' %}
+                                            <small><i class="fa fa-lock" aria-hidden="true"></i> Closed</small>
+                                        {% else %}
+                                            <small><i class="fa fa-globe" aria-hidden="true"></i> Public</small>
+                                        {% endif %}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

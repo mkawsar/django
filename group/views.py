@@ -34,3 +34,13 @@ class GroupCreateView(LoginRequiredMixin, generic.CreateView):
         context = super(GroupCreateView, self).get_context_data(**kwargs)
         context['title'] = 'Group Create'
         return context
+
+
+class GroupDetailsView(LoginRequiredMixin, generic.DetailView):
+    model = Group
+    template_name = 'group/details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupDetailsView, self).get_context_data(**kwargs)
+        context['title'] = 'Group Details'
+        return context
