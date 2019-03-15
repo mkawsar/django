@@ -123,38 +123,6 @@ body.nude {
     width: 30px;
 }
 
-/*.like-btn {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    background: lightgreen;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.428571429;
-    border-radius: 4px;
-}
-
-.dislike-btn {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-    background: #eeaf4c;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.428571429;
-    border-radius: 4px;
-}*/
-
 .like, .dislike {
     border: none;
     width: 20px;
@@ -177,3 +145,32 @@ body.nude {
     width: 100% !important;
     height: 300px !important;
 }
+
+@media (min-width: 991px) {
+    .navbar-collapse-custom {
+        padding-left: 0 !important;
+    }
+    .container-fluid-custom {
+        padding-left: 0 !important;
+    }
+}
+#topheader .navbar-nav li > a {
+	text-transform: capitalize;
+	color: #333;
+	transition: background-color .2s, color .2s;
+}
+
+#topheader .navbar-nav li > a:hover{
+    background-color: #333;
+    color: #fff;
+}
+#topheader .navbar-nav li > a:focus{
+    background-color: #333;
+    color: #fff;
+}
+
+#topheader .navbar-nav li.active > a {
+	background-color: #333;
+	color: #fff;
+}
+
