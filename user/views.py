@@ -54,4 +54,5 @@ class UserDetailsView(LoginRequiredMixin, generic.DeleteView):
         context['title'] = 'User Page'
         user_id = context['user'].pk
         context['posts'] = Post.objects.filter(author_id=user_id).order_by('-date_posted').all()
+        context['groups'] = Group.objects.filter(creator=user_id).order_by('-createdAt').all()
         return context

@@ -37,7 +37,7 @@
             <div class="col-lg-8 col-md-7">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Post</h4>
+                        <h4 class="card-title">Post{{ posts|pluralize:"s" }}</h4>
                     </div>
                     <div class="card-content">
                         <ul class="list-unstyled team-members">
@@ -55,6 +55,37 @@
                                 {% endfor %}
                             {% else %}
                                 No post found
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-7">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Group{{ groups|pluralize:"s" }}</h4>
+                    </div>
+                    <div class="card-content">
+                        <ul class="list-unstyled team-members">
+                            {% if groups|length > 0 %}
+                                {% for group in groups %}
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-6">{{ group.name }}</div>
+                                            <div class="col-xs-2">{{ group.createdAt|date:"F d, Y" }}</div>
+                                            {% if group.type == 'public' %}
+                                                <div class="col-xs-2"><span class="label label-success">Public</span></div>
+                                            {% else %}
+                                                <div class="col-xs-2"><span class="label label-danger">Private</span></div>
+                                            {% endif %}
+                                            {% comment %}<div class="col-xs-2 text-right">
+                                                <a href="{% url 'blog-detail' post.slug %}" class="btn btn-sm btn-success btn-icon"><i class="fa fa-eye"></i></a>
+                                            </div>{% endcomment %}
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                No group found
                             {% endif %}
                         </ul>
                     </div>
