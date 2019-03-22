@@ -31,19 +31,21 @@
                                 <div class="widget-header text-left widget-header-group">
                                     <img src="{{ object.picture.url }}" alt="background"
                                          class="widget-background widget-background-group img-responsive">
-                                    <h3 class="widget-content widget-content-image-bottom widget-content-light clearfix">
-                                        <a href="javascript:void(0)" class="widget-icon pull-right" data-toggle="modal"
-                                           data-target="#upload-group-image">
-                                            <i class="fa fa-camera" aria-hidden="true"></i>
+                                    <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
+                                        <a href="javascript:void(0)" class="widget-icon pull-right">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                        <a href="{% url 'group-update' object.slug %}" class=" btn-right widget-icon pull-right">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </a>
                                         <a href="javascript:void(0)"
                                            class="themed-color-default"><strong>{{ object.name }}</strong></a><br>
                                         {% if object.type == 'private' %}
-                                            <small><i class="fa fa-lock" aria-hidden="true"></i> Closed</small>
+                                            <small><i class="fa fa-lock" aria-hidden="true"></i> Private</small>
                                         {% else %}
                                             <small><i class="fa fa-globe" aria-hidden="true"></i> Public</small>
                                         {% endif %}
-                                    </h3>
+                                    </h4>
                                 </div>
                             </div>
                         </div>

@@ -44,3 +44,19 @@ class GroupDetailsView(LoginRequiredMixin, generic.DetailView):
         context = super(GroupDetailsView, self).get_context_data(**kwargs)
         context['title'] = 'Group Details'
         return context
+
+
+class GroupUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Group
+    template_name = 'group/edit.html'
+    fields = ['name', 'type', 'about']
+    success_url = '/group/'
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupUpdateView, self).get_context_data(**kwargs)
+        context['title'] = 'Group Update'
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Group item updated successfully!')
+        return super().form_valid(form)
