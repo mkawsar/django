@@ -32,12 +32,14 @@
                                     <img src="{{ object.picture.url }}" alt="background"
                                          class="widget-background widget-background-group img-responsive">
                                     <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
-                                        <a href="javascript:void(0)" class="widget-icon pull-right">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </a>
-                                        <a href="{% url 'group-update' object.slug %}" class=" btn-right widget-icon pull-right">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </a>
+                                        {% if user.id == object.creator_id %}
+                                            <a href="javascript:void(0)" class="widget-icon pull-right">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="{% url 'group-update' object.slug %}" class=" btn-right widget-icon pull-right">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                        {% endif %}
                                         <a href="javascript:void(0)"
                                            class="themed-color-default"><strong>{{ object.name }}</strong></a><br>
                                         {% if object.type == 'private' %}
