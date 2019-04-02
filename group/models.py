@@ -27,3 +27,13 @@ class Group(models.Model):
         output_size = (400, 700)
         img.thumbnail(output_size)
         img.save(self.picture.path)
+
+
+class GroupPeople(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    createdAt = models.DateTimeField(default=timezone.now)
+    updatedAt = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        db_table = 'group_peoples'

@@ -49,7 +49,7 @@ class GroupDetailsView(LoginRequiredMixin, generic.DetailView):
 class GroupUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Group
     template_name = 'group/edit.html'
-    fields = ['name', 'type', 'about']
+    fields = ['name', 'type', 'about', 'picture']
     success_url = '/group/'
 
     def get_context_data(self, **kwargs):
