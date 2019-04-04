@@ -60,3 +60,8 @@ class GroupUpdateView(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         messages.success(self.request, 'Group item updated successfully!')
         return super().form_valid(form)
+
+
+@login_required()
+def group_invite_user(request):
+    return render(request, 'group/invite-user.html')

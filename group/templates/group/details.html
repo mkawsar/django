@@ -60,5 +60,51 @@
                 {% include 'group/menu.html' with menu='discuss' slug=object.slug %}
             </div>
         </div>
+
+        <div class="modal fade" id="peopleListModal" tabindex="-1" role="dialog" aria-labelledby="postLikerLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">People List</h4>
+                    </div>
+                    <div class="modal-body modal-body-invite">
+                        <div id="people-list"></div>
+                    </div>
+                    <div class="modal-footer" style="border-top: 0px;">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock content %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('.inviteUser').click(function () {
+                let data_slug = $(this).attr('data-group-slug');
+                console.log(data_slug);
+                return false;
+
+                let pageUrl = '/challenges/people-list/' + data_slug;
+
+                $("#peopleListModal").modal('show');
+                $.ajax({
+                    type: "GET",
+                    url: pageUrl,
+                    beforeSend : function () {
+                        $("#people-list").html('<div class="overlay loader-div"><i class="fa fa-refresh fa-spin"></i></div>');
+                    },
+                    success: function(data) {
+                        $("#people-list").html(data);
+                    },
+                    error: function() {
+                        $("#people-list").html("Failed to load data.");
+                    }
+                });
+                e.preventDefault();
+            });
+        });
+    </script>
+{% endblock %}
