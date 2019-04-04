@@ -63,5 +63,5 @@ class GroupUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 @login_required()
-def group_invite_user(request):
+def group_invite_user(request, slug):
     return render(request, 'group/invite-user.html')

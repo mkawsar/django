@@ -82,12 +82,10 @@
 {% block script %}
     <script>
         $(document).ready(function () {
-            $('.inviteUser').click(function () {
+            $('.inviteUser').click(function (e) {
                 let data_slug = $(this).attr('data-group-slug');
-                console.log(data_slug);
-                return false;
-
-                let pageUrl = '/challenges/people-list/' + data_slug;
+                let pageUrl = '/group/invite-user/' + data_slug;
+                console.log(pageUrl);
 
                 $("#peopleListModal").modal('show');
                 $.ajax({
