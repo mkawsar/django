@@ -17,9 +17,11 @@
                         <li {% if menu == 'member' %} class="active" {% endif %}><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Members</a></li>
                         <li {% if menu == 'about' %} class="active" {% endif %}><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
 				  </ul>
-				  <ul class="nav navbar-nav navbar-right">
-						<li><a href="#" class="inviteUser" data-group-slug="{{ slug }}"><i class="fa fa-user"></i> Invite</a></li>
-				  </ul>
+                  {% if type == 'private' %}
+                      <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#" class="inviteUser" data-group-slug="{{ slug }}"><i class="fa fa-user"></i> Invite</a></li>
+                      </ul>
+                  {% endif %}
 			 </div>
 		</div>
   </nav>

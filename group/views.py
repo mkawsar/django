@@ -64,4 +64,17 @@ class GroupUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 @login_required()
 def group_invite_user(request, slug):
-    return render(request, 'group/invite-user.html')
+    users = User.objects.all()
+    group = Group.objects.filter(slug=slug).first()
+    invite_users = GroupPeople.objects.filter(group=group.id).all()
+
+    invite_user_array = []
+    for invite in invite_users:
+        invite_user_array.append(invite.id)
+
+    for user in users:
+        if user.id in invite_user_array:
+            invite_status = True
+        else:
+            invite_status = False
+    return render(request, 'group/invite-user.html', {'users': users, 'group': group, 'invite_users': invite_users, 'user_array': invite_user_array, 'invite_status': invite_status})

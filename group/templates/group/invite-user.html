@@ -1,1 +1,114 @@
-hello world
+<style>
+    .online-invite-table td img {
+        height: 50px;
+        width: 50px;
+    }
+    .online-invite-table td {
+        border: 0 none !important;
+    }
+    .online-user-td {
+        float: left;
+    }
+    .online-image-img {
+        height: 50px;
+    }
+    img.topnav-img {
+        border-radius: 50%;
+        display: inline;
+        margin-right: 5px;
+        width: 30px;
+    }
+    .challenge_invite {
+        height:20px;
+        width:20px;
+    }
+    .challenge_input {
+        height:20px;
+        width:20px;
+    }
+    #ckbCheckAll {
+        height:20px;
+        width:20px;
+    }
+</style>
+
+<div class="alert alert-success" role="alert" id="success_save" style="display: none;"></div>
+<div class="alert alert-danger" role="alert" id="failed_save" style="display: none;"></div>
+
+<form role="form" action="#" method="post" enctype="multipart/form-data" id="challengeInvitePeopleForms" novalidate="">
+{% csrf_token %}
+    <div class="table-responsive">
+        <div style="height: 250px;overflow-y: auto;">
+            <table class="table table-hover">
+                <tbody class="online-invite-table">
+                    <td class="online-user-td">
+                        <label>
+                            <p>Select All</p>
+                        </label>
+                    </td>
+                    <td>
+                        <input {% if invite_status == True %} disabled="disabled" {% endif %} type="checkbox" id="ckbCheckAll" name="checkAll">
+                    </td>
+                    {% comment %}@foreach($users as $user)
+                        @if($user->id != $challengeDetails->user_id)
+                            <?php $invited = false; ?>
+                            @if(in_array($user->id, $invitedUserArray))
+                                <?php $invited = true; ?>
+                            @endif{% endcomment %}
+
+                    {% for user in users %}
+                        <tr>
+                                <td class="online-user-td">
+                                    <div class="online-image-img">
+                                        {% if user.profile.image == Null %}
+                                            <img class="topnav-img" src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}" style="border-radius: 50%"/>
+                                        {% else %}
+                                            <img src="{{ user.profile.image.url }}" class="img-responsive" style="border-radius: 50%;width:50px;height: 50px;">
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="online-user-td">
+                                    <label @if($invited == true) class="text-muted" @endif>
+                                        {{ user.first_name }} {{ user.last_name }}
+                                        {% if invite_status == True or user.id == group.creator.id %}
+                                            <span class="badge">Invited</span>
+                                        {% endif %}
+                                        <br>
+                                        <p>{{ user.email }}</p>
+                                    </label>
+
+                                </td>
+                                <td class="online-add-td">
+                                    {% if invite_status == True or user.id == group.creator.id %}
+                                        <input disabled="disabled" class="challenge_input" name="users[]" value="{{ user.id }}" type="checkbox">
+                                    {% else %}
+                                        <input class="challenge_invite" name="users[]" value="{{ user.id }}" type="checkbox">
+                                    {% endif %}
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <input type="hidden" name="challenge_id" id="challenge_id" value="123">
+        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+        <button type="submit" id="invitePeopleBtn" class="btn btn-info pull-right" style="margin-right: 3px;" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Send Invites</button>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#ckbCheckAll").click(function () {
+            $(".challenge_invite").prop('checked', $(this).prop('checked'));
+        });
+
+        $(".challenge_invite").change(function(){
+            if (!$(this).prop("checked")){
+                $("#ckbCheckAll").prop("checked",false);
+            }
+        });
+    });
+</script>
