@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -72,9 +73,28 @@ def group_invite_user(request, slug):
     for invite in invite_users:
         invite_user_array.append(invite.id)
 
+    invite_status = False
+
     for user in users:
         if user.id in invite_user_array:
             invite_status = True
-        else:
-            invite_status = False
-    return render(request, 'group/invite-user.html', {'users': users, 'group': group, 'invite_users': invite_users, 'user_array': invite_user_array, 'invite_status': invite_status})
+    return render(request, 'group/invite-user.html',
+                  {'users': users, 'group': group, 'invite_users': invite_users, 'user_array': invite_user_array,
+                   'invite_status': invite_status})
+
+
+@login_required()
+def save_group_invite_user(request):
+    try:
+        if request.method == 'POST':
+            users = request.POST.getlist('users[]')
+            if not users:
+                return JsonResponse(status=200,
+                                    data={'status': False, 'message': 'Form at least one field is required'})
+            for user in users:
+                people = GroupPeople(group_id=request.POST['group_id'], user_id=user)
+                people.save()
+            return JsonResponse(status=200, data={'status': True, 'message': 'People invited successfully'})
+    except:
+        print(request.POST)
+        return JsonResponse(status=200, data={'status': False, 'message': 'Failed to people invite!'})
