@@ -1,0 +1,34 @@
+upstream community_server {
+ server localhost:8000 fail_timeout=0; 
+} 
+
+server { 
+   listen  80; 
+   server_name demo.com; 
+
+   client_max_body_size 4G; 
+
+   access_log /var/www/html/pythonproject/django-community/logs/nginx-access.log; 
+   error_log /var/www/html/pythonproject/django-community/logs/nginx-error.log; 
+
+   location /static/ { 
+       alias   /var/www/html/pythonproject/django-community/user/static/; 
+   } 
+
+   location /media/ { 
+        alias  /var/www/html/pythonproject/django-community/media/; 
+   } 
+
+   location / { 
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
+        proxy_set_header Host $http_host; 
+        proxy_redirect off; 
+
+       # Try to serve static files from nginx, no point in making an 
+       # *application* server like Unicorn/Rainbows! serve static files. 
+       if (!-f $request_filename) { 
+           proxy_pass http://community_server; 
+           break; 
+       } 
+   } 
+} 
