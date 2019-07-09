@@ -14,7 +14,9 @@
 						<li {% if menu == 'discuss' %} class="active" {% endif %}>
                             <a href="{% url 'group-details' slug %}" ><i class="fa fa-align-right" aria-hidden="true"></i> Discussion</a>
                         </li>
-                        <li {% if menu == 'member' %} class="active" {% endif %}><a href="#"><i class="fa fa-user" aria-hidden="true"></i> Members</a></li>
+                        <li {% if menu == 'member' %} class="active" {% endif %}>
+                            <a href="{% url 'group-members' slug %}"><i class="fa fa-user" aria-hidden="true"></i> Members</a>
+                        </li>
                         <li {% if menu == 'about' %} class="active" {% endif %}><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
 				  </ul>
                   {% if type == 'private' %}

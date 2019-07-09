@@ -1,3 +1,44 @@
 {% extends 'layouts/main.html' %}
 {% block content %}
+    <div class="container-fluid">
+        {% include 'layouts/alert-message.html' %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="widget widget-group widget-group-custom">
+                            <div class="widget-advanced widget-advanced-alt">
+                                <div class="widget-header text-left widget-header-group">
+                                    <img src="{{ group.picture.url }}" alt="background"
+                                         class="widget-background widget-background-group img-responsive">
+                                    <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
+                                        {% if user.id == group.creator_id %}
+                                            <a href="{% url 'group-delete' group.slug %}" class="widget-icon pull-right">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="{% url 'group-update' group.slug %}" class=" btn-right widget-icon pull-right">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a href="javascript:void(0)"
+                                           class="themed-color-default"><strong>{{ group.name }}</strong></a><br>
+                                        {% if group.type == 'private' %}
+                                            <small><i class="fa fa-lock" aria-hidden="true"></i> Private</small>
+                                        {% else %}
+                                            <small><i class="fa fa-globe" aria-hidden="true"></i> Public</small>
+                                        {% endif %}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'group/menu.html' with menu='member' slug=group.slug type=group.type %}
+            </div>
+        </div>
+    </div>
 {% endblock content %}

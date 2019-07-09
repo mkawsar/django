@@ -93,9 +93,10 @@ def save_group_invite_user(request):
         return JsonResponse(status=200, data={'status': False, 'message': 'Failed to people invite!'})
 
 
-class GroupMemberList(generic.TemplateView, LoginRequiredMixin):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'group/member.html')
+@login_required()
+def members(request, slug):
+    group = Group.objects.filter(slug=slug).first()
+    return render(request, 'group/member.html', {'group': group})
 
 
 @login_required()
