@@ -96,7 +96,7 @@ def save_group_invite_user(request):
 @login_required()
 def members(request, slug):
     group = Group.objects.filter(slug=slug).first()
-    return render(request, 'group/member.html', {'group': group})
+    return render(request, 'group/member.html', {'group': group, 'title': 'Group Members'})
 
 
 @login_required()
