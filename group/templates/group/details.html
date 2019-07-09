@@ -33,7 +33,7 @@
                                          class="widget-background widget-background-group img-responsive">
                                     <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
                                         {% if user.id == object.creator_id %}
-                                            <a href="javascript:void(0)" class="widget-icon pull-right">
+                                            <a href="{% url 'group-delete' object.slug %}" class="widget-icon pull-right">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </a>
                                             <a href="{% url 'group-update' object.slug %}" class=" btn-right widget-icon pull-right">

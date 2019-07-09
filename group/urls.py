@@ -8,4 +8,5 @@ urlpatterns = [
     path('update/<slug>', GroupUpdateView.as_view(), name='group-update'),
     path('invite-user/<slug>', group_invite_user, name='group-user-invite'),
     path('store-invite-user', save_group_invite_user, name='store-group-user-invite'),
+    path('delete/<slug>', delete, name='group-delete'),
 ]

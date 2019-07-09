@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -68,19 +68,12 @@ def group_invite_user(request, slug):
     users = User.objects.all()
     group = Group.objects.filter(slug=slug).first()
     invite_users = GroupPeople.objects.filter(group=group.id).all()
+    invite_users_array = []
 
-    invite_user_array = []
-    for invite in invite_users:
-        invite_user_array.append(invite.id)
-
-    invite_status = False
-
-    for user in users:
-        if user.id in invite_user_array:
-            invite_status = True
+    for member in invite_users:
+        invite_users_array.append(member.user_id)
     return render(request, 'group/invite-user.html',
-                  {'users': users, 'group': group, 'invite_users': invite_users, 'user_array': invite_user_array,
-                   'invite_status': invite_status})
+                  {'users': users, 'group': group, 'invite_users': invite_users, 'user_array': invite_users_array})
 
 
 @login_required()
@@ -98,3 +91,16 @@ def save_group_invite_user(request):
     except:
         print(request.POST)
         return JsonResponse(status=200, data={'status': False, 'message': 'Failed to people invite!'})
+
+
+class GroupMemberList(generic.TemplateView, LoginRequiredMixin):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'group/member.html')
+
+
+@login_required()
+def delete(request, slug):
+    group = Group.objects.filter(slug=slug)
+    group.delete()
+    messages.success(request, 'Group item deleted successfully!')
+    return HttpResponseRedirect("/group/")
