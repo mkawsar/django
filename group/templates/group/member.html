@@ -13,10 +13,10 @@
                                          class="widget-background widget-background-group img-responsive">
                                     <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
                                         {% if user.id == group.creator_id %}
-                                            <a href="{% url 'group-delete' group.slug %}" class="widget-icon pull-right">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            <a href="{% url 'group-delete' group.slug %}" class="btn btn-sm btn-danger pull-right confirm">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </a>
-                                            <a href="{% url 'group-update' group.slug %}" class=" btn-right widget-icon pull-right">
+                                            <a href="{% url 'group-update' group.slug %}" class="btn btn-sm btn-info pull-right">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>
                                         {% endif %}
@@ -42,3 +42,16 @@
         </div>
     </div>
 {% endblock content %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $(".confirm").confirm({
+                text: "Are you sure you want to delete this data?",
+                confirmButtonClass: "btn-danger",
+                cancelButtonClass: "btn-default",
+                dialogClass: "modal-dialog" // Bootstrap classes for large modal
+            });
+        });
+    </script>
+{% endblock %}
