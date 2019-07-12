@@ -1,12 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from blog.models import Post
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from group.models import Group
+from group.models import Group, GroupPeople
 
 
 # Registration page and store
@@ -26,10 +26,16 @@ def register(request):
 # Design of home page
 @login_required()
 def dashboard(request):
+    p_group_count = 0
     user_count = User.objects.count()
     post_count = Post.objects.count()
     public_group = Group.objects.filter(type='public').count()
-    return render(request, 'home/dashboard.html', {'title': 'Home', 'user_count': user_count, 'post_count': post_count, 'public_group': public_group})
+    private_group = Group.objects.filter(type='private')
+    for p_group in private_group:
+        p_group_count = GroupPeople.objects.filter(group_id=p_group.id).filter(user_id=request.user.id).count()
+    return render(request, 'home/dashboard.html',
+                  {'title': 'Home', 'user_count': user_count, 'post_count': post_count, 'public_group': public_group,
+                   'p_group': p_group_count})
 
 
 @login_required()
