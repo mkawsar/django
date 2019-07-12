@@ -6,30 +6,30 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-content">
-                        <div class="widget widget-group widget-group-custom">
-                            <div class="widget-advanced widget-advanced-alt">
-                                <div class="widget-header text-left widget-header-group">
-                                    <img src="{{ group.picture.url }}" alt="background"
-                                         class="widget-background widget-background-group img-responsive">
-                                    <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
-                                        {% if user.id == group.creator_id %}
-                                            <a href="{% url 'group-delete' group.slug %}" class="btn btn-sm btn-danger pull-right confirm">
-                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="{% url 'group-update' group.slug %}" class="btn btn-sm btn-info pull-right">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
-                                        {% endif %}
-                                        <a href="javascript:void(0)"
-                                           class="themed-color-default"><strong>{{ group.name }}</strong></a><br>
-                                        {% if group.type == 'private' %}
-                                            <small><i class="fa fa-lock" aria-hidden="true"></i> Private</small>
-                                        {% else %}
-                                            <small><i class="fa fa-globe" aria-hidden="true"></i> Public</small>
-                                        {% endif %}
-                                    </h4>
-                                </div>
-                            </div>
+                        <div class="text-center">
+                            <img src="{{ group.picture.url }}" alt="background"
+                                 class="img-responsive center-block">
+                        </div>
+                        <div class="text-left">
+                            <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
+                                {% if user.id == group.creator_id %}
+                                    <a href="{% url 'group-delete' group.slug %}"
+                                       class="btn btn-sm btn-danger pull-right confirm">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="{% url 'group-update' group.slug %}"
+                                       class="btn btn-sm btn-info pull-right">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                {% endif %}
+                                <a href="javascript:void(0)"
+                                   class="themed-color-default"><strong>{{ group.name }}</strong></a><br>
+                                {% if group.type == 'private' %}
+                                    <small><i class="fa fa-lock" aria-hidden="true"></i> Private</small>
+                                {% else %}
+                                    <small><i class="fa fa-globe" aria-hidden="true"></i> Public</small>
+                                {% endif %}
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -40,13 +40,41 @@
                 {% include 'group/menu.html' with menu='member' slug=group.slug type=group.type %}
             </div>
         </div>
+        <br>
+
+        <div class="row">
+            {% for user in users %}
+                <a href="{% url 'user-details' user.id %}">
+                    <div class="col-lg-2 col-sm-6">
+                        <div class="card" style="background: {{ colors|random }}">
+                            <div class="card-content">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="photo">
+                                            <img src="{{ user.profile.image.url }}" alt="user image"
+                                                 class="img-circle"
+                                                 height="65" width="65">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div class="numbers">
+                                            <p>{{ user.first_name }} {{ user.last_name }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}
 
 {% block script %}
     <script>
         $(document).ready(function () {
-             $('.inviteUser').click(function (e) {
+            $('.inviteUser').click(function (e) {
                 let data_slug = $(this).attr('data-group-slug');
                 let pageUrl = '/group/invite-user/' + data_slug;
 
@@ -54,13 +82,13 @@
                 $.ajax({
                     type: "GET",
                     url: pageUrl,
-                    beforeSend : function () {
+                    beforeSend: function () {
                         $("#people-list").html('<div class="overlay loader-div"><i class="fa fa-refresh fa-spin"></i></div>');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#people-list").html(data);
                     },
-                    error: function() {
+                    error: function () {
                         $("#people-list").html("Failed to load data.");
                     }
                 });

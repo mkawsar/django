@@ -1,24 +1,4 @@
 {% extends 'layouts/main.html' %}
-{% block style %}
-    <style>
-        .profile-img-for-add-member {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-        }
-
-        .push-bit {
-            margin-bottom: 0;
-        }
-
-        .btn.cross-post-btn {
-            font-size: 10px;
-            background: transparent;
-            font-weight: normal;
-            padding: 0;
-        }
-    </style>
-{% endblock style %}
 {% block content %}
     <div class="container-fluid">
         {% include 'layouts/alert-message.html' %}
@@ -26,30 +6,30 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-content">
-                        <div class="widget widget-group widget-group-custom">
-                            <div class="widget-advanced widget-advanced-alt">
-                                <div class="widget-header text-left widget-header-group">
-                                    <img src="{{ object.picture.url }}" alt="background"
-                                         class="widget-background widget-background-group img-responsive">
-                                    <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
-                                        {% if user.id == object.creator_id %}
-                                            <a href="{% url 'group-delete' group.slug %}" class="btn btn-sm btn-danger pull-right confirm">
-                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="{% url 'group-update' group.slug %}" class="btn btn-sm btn-info pull-right">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
-                                        {% endif %}
-                                        <a href="javascript:void(0)"
-                                           class="themed-color-default"><strong>{{ object.name }}</strong></a><br>
-                                        {% if object.type == 'private' %}
-                                            <small><i class="fa fa-lock" aria-hidden="true"></i> Private</small>
-                                        {% else %}
-                                            <small><i class="fa fa-globe" aria-hidden="true"></i> Public</small>
-                                        {% endif %}
-                                    </h4>
-                                </div>
-                            </div>
+                        <div class="text-center">
+                            <img src="{{ object.picture.url }}" alt="background"
+                                 class="img-responsive center-block">
+                        </div>
+                        <div class="text-left">
+                            <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
+                                {% if user.id == object.creator_id %}
+                                    <a href="{% url 'group-delete' group.slug %}"
+                                       class="btn btn-sm btn-danger pull-right confirm">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="{% url 'group-update' group.slug %}"
+                                       class="btn btn-sm btn-info pull-right">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                {% endif %}
+                                <a href="javascript:void(0)"
+                                   class="themed-color-default"><strong>{{ object.name }}</strong></a><br>
+                                {% if object.type == 'private' %}
+                                    <small><i class="fa fa-lock" aria-hidden="true"></i> Private</small>
+                                {% else %}
+                                    <small><i class="fa fa-globe" aria-hidden="true"></i> Public</small>
+                                {% endif %}
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -60,6 +40,7 @@
                 {% include 'group/menu.html' with menu='discuss' slug=object.slug type=object.type %}
             </div>
         </div>
+        <br>
 
         <div class="row">
             <div class="col-md-12">
@@ -82,15 +63,19 @@
                             <button type="submit" class="btn btn-success">Submit</button>
                         </form>
                         <br><br>
-                        <p><span class="badge">{{ group.group_comment_count }}</span> Comment{{ group.group_comment_count|pluralize:'s' }}:</p><br>
+                        <p><span class="badge">{{ group.group_comment_count }}</span>
+                            Comment{{ group.group_comment_count|pluralize:'s' }}:</p><br>
 
                         {% for comment in comments %}
                             <div class="row">
                                 <div class="col-sm-2 text-center comment-icon">
-                                    <img src="{{ comment.user.profile.image.url }}" class="img-circle" height="65" width="65" alt="Avatar">
+                                    <img src="{{ comment.user.profile.image.url }}" class="img-circle" height="65"
+                                         width="65" alt="Avatar">
                                 </div>
                                 <div class="col-sm-10">
-                                    <h5>{{ comment.user.first_name }} <small>{{ comment.createdAt|date:"F d, Y" }}</small></h5>
+                                    <h5>{{ comment.user.first_name }}
+                                        <small>{{ comment.createdAt|date:"F d, Y" }}</small>
+                                    </h5>
                                     <p>{{ comment.comment }}</p>
                                     <br>
                                 </div>
@@ -116,13 +101,13 @@
                 $.ajax({
                     type: "GET",
                     url: pageUrl,
-                    beforeSend : function () {
+                    beforeSend: function () {
                         $("#people-list").html('<div class="overlay loader-div"><i class="fa fa-refresh fa-spin"></i></div>');
                     },
-                    success: function(data) {
+                    success: function (data) {
                         $("#people-list").html(data);
                     },
-                    error: function() {
+                    error: function () {
                         $("#people-list").html("Failed to load data.");
                     }
                 });

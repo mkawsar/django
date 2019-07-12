@@ -97,7 +97,16 @@ def save_group_invite_user(request):
 @login_required()
 def members(request, slug):
     group = Group.objects.filter(slug=slug).first()
-    return render(request, 'group/member.html', {'group': group, 'title': 'Group Members'})
+    colors = ['#f3c925', '#838c02', '#2a736c', '#ff4b5a']
+    if group.type == 'public':
+        users = User.objects.all()
+    else:
+        users = []
+        peoples = GroupPeople.objects.filter(group_id=group.id)
+        for people in peoples:
+            users.append(User.objects.filter(pk=people.user_id).first())
+    return render(request, 'group/member.html',
+                  {'group': group, 'title': 'Group Members', 'colors': colors, 'users': users})
 
 
 @login_required()
