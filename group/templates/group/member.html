@@ -46,6 +46,26 @@
 {% block script %}
     <script>
         $(document).ready(function () {
+             $('.inviteUser').click(function (e) {
+                let data_slug = $(this).attr('data-group-slug');
+                let pageUrl = '/group/invite-user/' + data_slug;
+
+                $("#peopleListModal").modal('show');
+                $.ajax({
+                    type: "GET",
+                    url: pageUrl,
+                    beforeSend : function () {
+                        $("#people-list").html('<div class="overlay loader-div"><i class="fa fa-refresh fa-spin"></i></div>');
+                    },
+                    success: function(data) {
+                        $("#people-list").html(data);
+                    },
+                    error: function() {
+                        $("#people-list").html("Failed to load data.");
+                    }
+                });
+                e.preventDefault();
+            });
             $(".confirm").confirm({
                 text: "Are you sure you want to delete this data?",
                 confirmButtonClass: "btn-danger",

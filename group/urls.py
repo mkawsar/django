@@ -10,4 +10,5 @@ urlpatterns = [
     path('store-invite-user', save_group_invite_user, name='store-group-user-invite'),
     path('delete/<slug>', delete, name='group-delete'),
     path('member-list/<slug>', members, name='group-members'),
+    path('post/comment', comment, name='group-comment'),
 ]

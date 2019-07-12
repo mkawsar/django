@@ -1,15 +1,15 @@
 <div id="topheader">
   <nav class="navbar navbar-default">
 		<div class="">
-			 <div class="navbar-header">
+			 {% comment %}<div class="navbar-header">
 				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 				  </button>
-			 </div>
-			 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			 </div>{% endcomment %}
+			 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-left: -14px;">
 				  <ul class="nav navbar-nav">
 						<li {% if menu == 'discuss' %} class="active" {% endif %}>
                             <a href="{% url 'group-details' slug %}" ><i class="fa fa-align-right" aria-hidden="true"></i> Discussion</a>
@@ -17,7 +17,7 @@
                         <li {% if menu == 'member' %} class="active" {% endif %}>
                             <a href="{% url 'group-members' slug %}"><i class="fa fa-user" aria-hidden="true"></i> Members</a>
                         </li>
-                        <li {% if menu == 'about' %} class="active" {% endif %}><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
+                        {% comment %}<li {% if menu == 'about' %} class="active" {% endif %}><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>{% endcomment %}
 				  </ul>
                   {% if type == 'private' %}
                       <ul class="nav navbar-nav navbar-right">
@@ -27,4 +27,21 @@
 			 </div>
 		</div>
   </nav>
+</div>
+
+<div class="modal fade" id="peopleListModal" tabindex="-1" role="dialog" aria-labelledby="postLikerLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">People List</h4>
+            </div>
+            <div class="modal-body modal-body-invite">
+                <div id="people-list"></div>
+            </div>
+            <div class="modal-footer" style="border-top: 0px;">
+            </div>
+        </div>
+    </div>
 </div>

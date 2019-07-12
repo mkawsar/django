@@ -44,6 +44,7 @@ class GroupDetailsView(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(GroupDetailsView, self).get_context_data(**kwargs)
         context['title'] = 'Group Details'
+        context['comments'] = GroupComment.objects.filter(group_id=context['group'].pk).order_by('-createdAt')
         return context
 
 
@@ -105,3 +106,14 @@ def delete(request, slug):
     group.delete()
     messages.success(request, 'Group item deleted successfully!')
     return HttpResponseRedirect("/group/")
+
+
+# Group post comment by group members
+@login_required()
+def comment(request):
+    if request.method == 'POST':
+        comment = GroupComment(group_id=request.POST['group_id'], user_id=request.user.id,
+                               comment=request.POST['comment'])
+        comment.save()
+        messages.success(request, 'Group post comment added is successfully!')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

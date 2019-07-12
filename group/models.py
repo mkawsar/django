@@ -23,10 +23,16 @@ class Group(models.Model):
         if not self.id:
             self.slug = slugify(self.name)
         super(Group, self).save(*args, **kwargs)
+        member = GroupPeople(user_id=self.creator_id, group_id=self.id)
+        member.save()
         img = Image.open(self.picture.path)
         output_size = (400, 700)
         img.thumbnail(output_size)
         img.save(self.picture.path)
+
+    @property
+    def group_comment_count(self):
+        return GroupComment.objects.filter(group_id=self.id).count()
 
 
 class GroupPeople(models.Model):
@@ -37,3 +43,14 @@ class GroupPeople(models.Model):
 
     class Meta:
         db_table = 'group_peoples'
+
+
+class GroupComment(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    createdAt = models.DateTimeField(default=timezone.now)
+    updatedAt = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        db_table = 'group_comments'

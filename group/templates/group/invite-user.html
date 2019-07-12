@@ -61,9 +61,9 @@
                                     </div>
                                 </td>
                                 <td class="online-user-td">
-                                    <label {% if user.id in user_array or user.id == group.creator.id %} class="text-muted" {% endif %}>
+                                    <label {% if user.id in user_array %} class="text-muted" {% endif %}>
                                         {{ user.first_name }} {{ user.last_name }}
-                                        {% if user.id in user_array or user.id == group.creator.id %}
+                                        {% if user.id in user_array %}
                                             <span class="badge">Invited</span>
                                         {% endif %}
                                         <br>
@@ -72,7 +72,7 @@
 
                                 </td>
                                 <td class="online-add-td">
-                                    {% if user.id in user_array or user.id == group.creator.id %}
+                                    {% if user.id in user_array %}
                                         <input disabled="disabled" class="challenge_input" value="{{ user.id }}" type="checkbox">
                                     {% else %}
                                         <input class="challenge_invite" name="users[]" value="{{ user.id }}" type="checkbox">
