@@ -14,11 +14,11 @@
         <div class="user">
             <div class="info">
                 <div class="photo">
-                    <img src="{{ user.profile.image.url }}"/>
+                    <img src="{{ request.user.profile.image.url }}"/>
                 </div>
 
                 <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                    <span>{{ user.first_name }} {{ user.last_name }} <b class="caret"></b></span>
+                    <span>{{ request.user.first_name }} {{ request.user.last_name }} <b class="caret"></b></span>
                 </a>
                 <div class="clearfix"></div>
 
