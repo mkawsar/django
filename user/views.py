@@ -33,6 +33,7 @@ def dashboard(request):
     private_group = Group.objects.filter(type='private')
     for p_group in private_group:
         p_group_count = GroupPeople.objects.filter(group_id=p_group.id).filter(user_id=request.user.id).count()
+        p_group_count += 1
     return render(request, 'home/dashboard.html',
                   {'title': 'Home', 'user_count': user_count, 'post_count': post_count, 'public_group': public_group,
                    'p_group': p_group_count})
