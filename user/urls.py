@@ -8,4 +8,5 @@ urlpatterns = [
     path('settings/', include('settings.urls')),
     path('blog/', include('blog.urls')),
     path('group/', include('group.urls')),
+    path('chat/', include('chat.urls')),
 ]

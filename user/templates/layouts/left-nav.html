@@ -4,6 +4,7 @@
 {% url 'blog-home' as blog_url %}
 {% url 'user-add' as add_user_url %}
 {% url 'group-index' as group_url %}
+{% url 'chat-index' as chat_url %}
 <div class="sidebar" data-background-color="brown" data-active-color="danger">
     <div class="logo">
         <a href="/" class="simple-text logo-mini">CU</a>
@@ -45,25 +46,35 @@
         <ul class="nav">
             <li {% if request.get_full_path == home_url %}class="active"{% endif %}>
                 <a href="{% url 'home' %}">
-                    <i class="ti-panel"></i><p>Dashboard</p>
+                    <i class="ti-panel"></i>
+                    <p>Dashboard</p>
                 </a>
             </li>
 
             <li {% if request.get_full_path == setting_url or request.get_full_path == add_user_url or request.get_full_path == add_user_url %}class="active"{% endif %}>
                 <a href="{% url 'setting-index' %}">
-                    <i class="fa fa-gear"></i><p>Setting</p>
+                    <i class="fa fa-gear"></i>
+                    <p>Setting</p>
                 </a>
             </li>
 
             <li {% if request.get_full_path == blog_url %}class="active"{% endif %}>
                 <a href="{% url 'blog-home' %}">
-                    <i class="fa fa-rss"></i><p>Blog</p>
+                    <i class="fa fa-rss"></i>
+                    <p>Blog</p>
                 </a>
             </li>
 
             <li {% if request.get_full_path == group_url %}class="active"{% endif %}>
                 <a href="{% url 'group-index' %}">
-                    <i class="fa fa-sun-o"></i><p>Group</p>
+                    <i class="fa fa-sun-o"></i>
+                    <p>Group</p>
+                </a>
+            </li>
+            <li {% if request.get_full_path == chat_url %}class="active"{% endif %}>
+                <a href="{% url 'chat-index' %}">
+                    <i class="fa fa-commenting-o"></i>
+                    <p>Chat</p>
                 </a>
             </li>
         </ul>

@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'settings.apps.SettingsConfig',
     'blog.apps.BlogConfig',
     'group.apps.GroupConfig',
+    'chat.apps.ChatConfig',
     'django.contrib.admin',
     'crispy_forms',
     'django.contrib.auth',
