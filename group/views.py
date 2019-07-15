@@ -16,7 +16,15 @@ class GroupListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(GroupListView, self).get_context_data(**kwargs)
+        private_group_queries = Group.objects.raw("""
+        SELECT groups.id, groups.name, groups.slug, groups.picture, groups.creator_id,
+        group_peoples.user_id AS group_member_id FROM 
+        group_peoples INNER JOIN groups ON (group_peoples.group_id = groups.id)
+        WHERE(groups.type = 'private')
+        AND(group_peoples.user_id = '%s')
+        """, [self.request.user.id])
         context['title'] = 'Group'
+        context['private_groups'] = private_group_queries
         return context
 
 

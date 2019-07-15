@@ -26,17 +26,18 @@ def register(request):
 # Design of home page
 @login_required()
 def dashboard(request):
-    p_group_count = 0
     user_count = User.objects.count()
     post_count = Post.objects.count()
     public_group = Group.objects.filter(type='public').count()
-    private_group = Group.objects.filter(type='private')
-    for p_group in private_group:
-        p_group_count = GroupPeople.objects.filter(group_id=p_group.id).filter(user_id=request.user.id).count()
-        p_group_count += 1
+    private_group_count = Group.objects.raw("""
+    SELECT groups.id FROM 
+    group_peoples INNER JOIN groups ON (group_peoples.group_id = groups.id)
+    WHERE(groups.type = 'private')
+    AND(group_peoples.user_id = '%s')
+    """, [request.user.id])
     return render(request, 'home/dashboard.html',
                   {'title': 'Home', 'user_count': user_count, 'post_count': post_count, 'public_group': public_group,
-                   'p_group': p_group_count})
+                   'private_group_count': private_group_count})
 
 
 @login_required()

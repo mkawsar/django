@@ -5,8 +5,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="block-content-full" style="overflow: auto;">
+                    <div class="card-header">
+                        <h4>Public Group</h4>
+                    </div>
+                    <hr>
                     {% for group in groups %}
-                        {% if user.id == group.creator.id or group.type == 'public' %}
+                        {% if group.type == 'public' %}
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-content">
@@ -23,8 +27,41 @@
                                     </div>
                                 </div>
                             </div>
+                        {% else %}
+                            Not found any public group
                         {% endif %}
                     {% endfor %}
+                </div>
+            </div>
+            <hr>
+            <div class="col-md-12">
+                <div class="block-content-full" style="overflow: auto;">
+                    <div class="card-header">
+                        <h4>Private Group</h4>
+                    </div>
+                    <hr>
+                    {% if private_groups %}
+                        {% for P_group in private_groups %}
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="text-center">
+                                            <img src="{{ P_group.picture.url }}" alt="background"
+                                                 class="widget-background animation-pulseSlow group-img">
+                                            <h5 class="widget-content widget-content-image widget-content-light">
+                                                <a href="{% url 'group-details' P_group.slug %}">{{ P_group.name }}</a>
+                                            </h5>
+                                            <a href="{% url 'group-details' P_group.slug %}"
+                                               class="btn btn-primary-proUi"><i
+                                                    class="fa fa-search"></i> <strong>View</strong></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        Not found any private group
+                    {% endif %}
                 </div>
             </div>
         </div>
