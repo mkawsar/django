@@ -6,71 +6,91 @@
             <div class="col-md-12">
                 <div class="card">
                     <h3 class=" text-center">Messaging</h3>
-                    <div class="messaging">
-                        <div class="inbox_msg">
-                            <div class="inbox_people">
-                                <div class="headind_srch">
-                                    <div class="recent_heading">
-                                        <h4>Recent</h4>
-                                    </div>
+                    <div class="card-content">
+                        <div id="chat-sidebar">
+                            {% for user in users %}
+                                <div id="sidebar-user-box" class="{{ user.id }}">
+                                    <img src="{{ user.profile.image.url }}"/>
+                                    <span id="slider-username">{{ user.first_name }} {{ user.last_name }} </span>
                                 </div>
-                                <div class="inbox_chat">
-                                    {% for user in users %}
-                                        <div class="chat_list active_chat">
-                                            <div class="chat_people">
-                                                <div class="chat_img">
-                                                    <img src="{{ user.profile.image.url }}"
-                                                         alt="{{ user.first_name }}" class="img-circle">
-                                                </div>
-                                                <div class="chat_ib">
-                                                    <h5>{{ user.first_name }} {{ user.last_name }} <span class="chat_date">Dec 25</span></h5>
-                                                    <p>Test, which is a new approach to have all solutions
-                                                        astrology under one roof.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <div class="mesgs">
-                                <div class="msg_history">
-                                    <div class="incoming_msg">
-                                        <div class="incoming_msg_img"><img
-                                                src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
-                                        </div>
-                                        <div class="received_msg">
-                                            <div class="received_withd_msg">
-                                                <p>Test which is a new approach to have all
-                                                    solutions</p>
-                                                <span class="time_date"> 11:01 AM    |    June 9</span></div>
-                                        </div>
-                                    </div>
-                                    <div class="outgoing_msg">
-                                        <div class="sent_msg">
-                                            <p>Test which is a new approach to have all
-                                                solutions</p>
-                                            <span class="time_date"> 11:01 AM    |    June 9</span></div>
-                                    </div>
-                                </div>
-                                <div class="type_msg">
-                                    <div class="input_msg_write">
-                                        <div class="col-sm-12">
-                                            <div class="col-sm-10">
-                                                <input type="text" class="write_msg" placeholder="Type a message"/>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <button class="msg_send_btn" type="button">
-                                                    <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
+
+                            <div class="test"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+
+            var arr = []; // List of users
+
+            $(document).on('click', '.msg_head', function () {
+                var chatbox = $(this).parents().attr("rel");
+                $('[rel="' + chatbox + '"] .msg_wrap').slideToggle('slow');
+                return false;
+            });
+
+
+            $(document).on('click', '.close', function () {
+                var chatbox = $(this).parents().parents().attr("rel");
+                $('[rel="' + chatbox + '"]').hide();
+                arr.splice($.inArray(chatbox, arr), 1);
+                displayChatBox();
+                return false;
+            });
+
+            $(document).on('click', '#sidebar-user-box', function () {
+                var userID = $(this).attr("class");
+                var username = $(this).children().text();
+
+                if ($.inArray(userID, arr) != -1) {
+                    arr.splice($.inArray(userID, arr), 1);
+                }
+
+                arr.unshift(userID);
+                var chatPopup = '<div class="msg_box" style="right:270px" rel="' + userID + '">' +
+                    '<div class="msg_head">' + username +
+                    '<div class="close"><i class="fa fa-times" aria-hidden="true"></i></div> </div>' +
+                    '<div class="msg_wrap"> <div class="msg_body">	<div class="msg_push"></div> </div>' +
+                    '<div class="msg_footer"><textarea class="msg_input" rows="4"></textarea></div> 	</div> 	</div>';
+
+                $(".test").append(chatPopup);
+                displayChatBox();
+            });
+
+
+            $(document).on('keypress', 'textarea', function (e) {
+                if (e.keyCode == 13) {
+                    var msg = $(this).val();
+                    $(this).val('');
+                    if (msg.trim().length != 0) {
+                        var chatbox = $(this).parents().parents().parents().attr("rel");
+                        $('<div class="msg-right">' + msg + '</div>').insertBefore('[rel="' + chatbox + '"] .msg_push');
+                        $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                    }
+                }
+            });
+
+
+            function displayChatBox() {
+                i = 270; // start position
+                j = 260;  //next position
+
+                $.each(arr, function (index, value) {
+                    if (index < 2) {
+                        $('[rel="' + value + '"]').css("right", i);
+                        $('[rel="' + value + '"]').show();
+                        i = i + j;
+                    } else {
+                        $('[rel="' + value + '"]').hide();
+                    }
+                });
+            }
+        });
+    </script>
 {% endblock %}
