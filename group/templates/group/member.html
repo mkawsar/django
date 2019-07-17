@@ -45,7 +45,7 @@
         <div class="row">
             {% for user in users %}
                 <a href="{% url 'user-details' user.id %}">
-                    <div class="col-lg-2 col-sm-6">
+                    <div class="col-lg-3 col-sm-6">
                         <div class="card" style="background: {{ colors|random }}">
                             <div class="card-content">
                                 <div class="row">
@@ -57,7 +57,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-9">
-                                        <div class="numbers">
+                                        <div class="numbers pull-left">
                                             <p>{{ user.first_name }} {{ user.last_name }}</p>
                                         </div>
                                     </div>
