@@ -14,7 +14,7 @@
                         <div class="wrap" style="height: 450px">
                             <section class="left">
                                 <div class="profile">
-                                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1089577/user.jpg">
+                                    <img src="{{ request.user.profile.image.url }}">
                                 </div>
                                 <div class="wrap-search">
                                     <div class="search">
@@ -28,7 +28,7 @@
 
                             <section class="right">
                                 <div class="chat-head">
-                                    <img alt="profilepicture">
+                                    <img src="{{ request.user.profile.image.url }}" alt="profilepicture">
                                     <div class="chat-name">
                                         <h1 class="font-name"></h1>
                                         <p class="font-online"></p>
@@ -98,11 +98,11 @@
 
         Group.prototype.addMember = function (contact) {
             this.members.push(contact);
-        }
+        };
 
         Group.prototype.addMessage = function (msg) {
             this.messages.push(msg);
-        }
+        };
 
         appGroups = Group;
         return appGroups;
@@ -113,8 +113,8 @@
     var WhatsApp = (function (app) {
         function Message(text, name, time, type, group) {
             this.text = text;
-            this.name = name,
-                this.time = time;
+            this.name = name;
+            this.time = time;
             this.type = type;
             this.group = group;
         }
@@ -131,7 +131,7 @@
 
         function Subject() {
             this.observers = [];
-        };
+        }
 
         Subject.prototype.subscribe = function (item) {
             this.observers.push(item);
