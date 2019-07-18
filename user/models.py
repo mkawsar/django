@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django.utils import timezone
 
 
 # Create your models here.
@@ -18,3 +19,14 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+
+# User access role
+class Role(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20, default='admin', blank=False, null=False)
+    createdAt = models.DateTimeField(default=timezone.now)
+    updatedAt = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        db_table = 'user_roles'
