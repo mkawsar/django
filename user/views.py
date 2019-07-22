@@ -1,5 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, render_to_response
+from django.template import RequestContext
+
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -20,7 +22,7 @@ def register(request):
             return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'register.html', {'form': form, 'title': 'Registration'})
 
 
 # Design of home page
@@ -64,3 +66,7 @@ class UserDetailsView(LoginRequiredMixin, generic.DeleteView):
         context['posts'] = Post.objects.filter(author_id=user_id).order_by('-date_posted').all()
         context['groups'] = Group.objects.filter(creator=user_id).order_by('-createdAt').all()
         return context
+
+
+def handler404(request, exception):
+    return render(request, 'errors/404.html')
