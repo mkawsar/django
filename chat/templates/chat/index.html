@@ -164,7 +164,56 @@
 
         var Model = {
             start: function () {
-                $.getJSON("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1089577/contacts2.json", function (data) {
+                $.get('http://127.0.0.1:8000/chat/user/list', function (data) {
+                    console.log(JSON.parse(data))
+                    for (var i = 0; i < data.length; i++) {
+                        if (window.CP.shouldStopExecution(4)) {
+                            break;
+                        }
+                        var e = data[i];
+
+                        if (e.online == undefined) {
+                            console.log(e.user.profile.image.url);
+                            var group = new appGroups(e.first_name, e.profile.image.url);
+                            {% comment %}for (var j = 0; j < e.members.length; j++) {
+                                if (window.CP.shouldStopExecution(1)) {
+                                    break;
+                                }
+                                group.addMember(contactList[e.members[j].contact]);
+                                contactList[e.members[j].contact].addGroup(group);
+                            }{% endcomment %}
+                            window.CP.exitedLoop(1);
+
+                            {% comment %}for (var j = 0; j < e.messages.length; j++) {
+                                if (window.CP.shouldStopExecution(2)) {
+                                    break;
+                                }
+                                var m = e.messages[j];
+                                var message = new appMessages(m.text, m.name, 'm.time', m.type, true);
+                                group.addMessage(message);
+                            }{% endcomment %}
+                            window.CP.exitedLoop(2);
+
+                        } else {
+                            console.log(e.profile.image.url)
+                            var contact = new appContacts(e.first_name, e.profile.image.url, e.is_active);
+                            {% comment %}for (var j = 0; j < e.messages.length; j++) {
+                                if (window.CP.shouldStopExecution(3)) {
+                                    break;
+                                }
+                                var m = e.messages[j];
+                                var message = new appMessages(m.text, m.name, m.time, m.type, false);
+                                contact.addMessage(message);
+                            }{% endcomment %}
+                            window.CP.exitedLoop(3);
+
+                        }
+                    }
+                    window.CP.exitedLoop(4);
+
+                    subject.notifyObservers();
+                });
+                {% comment %}$.getJSON("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1089577/contacts2.json", function (data) {
                     for (var i = 0; i < data.elements.length; i++) {
                         if (window.CP.shouldStopExecution(4)) {
                             break;
@@ -209,7 +258,7 @@
                     window.CP.exitedLoop(4);
 
                     subject.notifyObservers();
-                });
+                });{% endcomment %}
             },
             writeMessage: function () {
                 var msg = new appMessages($(".input-message").val(), "", new Date().getHours() + ":" + new Date().getMinutes(), true);
