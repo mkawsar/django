@@ -261,3 +261,7 @@ body.nude {
     border-radius: 5px;
     word-break: break-all;
 }
+
+.chat-img {
+    margin-top: 13px;
+}
