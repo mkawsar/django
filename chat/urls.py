@@ -1,7 +1,9 @@
-from django.urls import path
+from django.urls import path, re_path
 from .views import *
 
 urlpatterns = [
     path('', ChatIndex.as_view(), name='chat-index'),
-    path('user/list', users, name='user-list'),
+    path('conversation', broadcast),
+    path('conversations/', conversations),
+    re_path(r'^conversations/(?P<id>[-\w]+)/delivered$', delivered),
 ]
