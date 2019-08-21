@@ -7,6 +7,7 @@ from django.views.generic import (
 )
 from user.forms import UserRegisterForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required
+from user.models import Role
 
 
 # All users list
@@ -31,6 +32,8 @@ def create(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'User registration by admin is successfully!')
+            role = Role(user_id=User.objects.latest('id').id, role='user')
+            role.save()
             return redirect('setting-index')
     return render(request, 'user/add.html', {'title': 'New User'})
 

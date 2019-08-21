@@ -1,14 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, HttpResponse, render_to_response
-from django.template import RequestContext
-
+from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from blog.models import Post
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from group.models import Group, GroupPeople
+from group.models import Group
+from .models import Role
 
 
 # Registration page and store
@@ -19,6 +18,8 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, 'Your account has been created. You are now enable to login.')
+            role = Role(user_id=User.objects.latest('id').id, role='user')
+            role.save()
             return redirect('login')
     else:
         form = UserRegisterForm()

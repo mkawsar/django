@@ -13,14 +13,3 @@ def create_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def create_save(sender, instance, **kwargs):
     instance.profile.save()
-
-
-@receiver(post_save, sender=User)
-def create_role(sender, instance, created, **kwargs):
-    if created:
-        Role.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def create_save(sender, instance, **kwargs):
-    instance.role.save()
