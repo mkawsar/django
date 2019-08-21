@@ -1,3 +1,4 @@
+import os
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
@@ -8,10 +9,10 @@ from django.views import generic
 
 # instantiate pusher
 pusher = Pusher(
-    app_id='845914',
-    key='1d47897c5886aefa5dd4',
-    secret='a9b46ace494696b48e24',
-    cluster='ap2'
+    app_id=os.getenv('PUSHER_APP_ID'),
+    key=os.getenv('PUSHER_KEY'),
+    secret=os.getenv('PUSHER_SECRET'),
+    cluster=os.getenv('PUSHER_CLUSTER')
 )
 
 
