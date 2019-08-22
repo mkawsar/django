@@ -32,7 +32,7 @@ def create(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'User registration by admin is successfully!')
-            role = Role(user_id=User.objects.latest('id').id, role='user')
+            role = Role(user_id=User.objects.latest('id').id, role=request.POST.get('role'))
             role.save()
             return redirect('setting-index')
     return render(request, 'user/add.html', {'title': 'New User'})
@@ -62,6 +62,7 @@ def edit_user(request, user_id):
         form = UserUpdateForm(request.POST, instance=users)
         if form.is_valid():
             form.save()
+
             messages.success(request, 'User updated by admin is successfully!')
             return redirect('setting-index')
     return render(request, 'user/edit.html', {'title': 'Edit User', 'users': users})
