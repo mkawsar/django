@@ -1,93 +1,91 @@
 {% extends 'layouts/main.html' %}
 {% block content %}
-    <div class="container-fluid">
-        {% include 'layouts/alert-message.html' %}
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <form class="form-horizontal" id="editUserFormValidation" method="POST">
-                        {% csrf_token %}
-                        <div class="card-content">
-                            <fieldset>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">First Name</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="text" name="first_name"
-                                               placeholder="First Name" value="{{ users.first_name }}"
-                                               required="required"
-                                               aria-required="true">
-                                    </div>
+<div class="container-fluid">
+    {% include 'layouts/alert-message.html' %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <form class="form-horizontal" id="editUserFormValidation" method="POST">
+                    {% csrf_token %}
+                    <div class="card-content">
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">First Name</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="first_name" placeholder="First Name"
+                                        value="{{ users.first_name }}" required="required" aria-required="true">
                                 </div>
-                            </fieldset>
+                            </div>
+                        </fieldset>
 
-                            <fieldset>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Last Name</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="text" name="last_name" placeholder="Last Name"
-                                               required="required" value="{{ users.last_name }}"
-                                               aria-required="true">
-                                    </div>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Last Name</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="last_name" placeholder="Last Name"
+                                        required="required" value="{{ users.last_name }}" aria-required="true">
                                 </div>
-                            </fieldset>
+                            </div>
+                        </fieldset>
 
-                            <fieldset>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Username</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="text" placeholder="Username"
-                                               required="required" value="{{ users.username }}" readonly="readonly"
-                                               aria-required="true">
-                                    </div>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Username</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" placeholder="Username" required="required"
+                                        value="{{ users.username }}" readonly="readonly" aria-required="true">
                                 </div>
-                            </fieldset>
+                            </div>
+                        </fieldset>
 
-                            <fieldset>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">
-                                        Email
-                                    </label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="email" placeholder="Email" name="email"
-                                               email="true" required="required" value="{{ users.email }}"
-                                               aria-required="true">
-                                    </div>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">
+                                    Email
+                                </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="email" placeholder="Email" name="email"
+                                        email="true" required="required" value="{{ users.email }}" aria-required="true">
                                 </div>
-                            </fieldset>
+                            </div>
+                        </fieldset>
 
-                            <fieldset>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Role</label>
-                                    <div class="col-sm-10">
-                                        <select name="role" id="role" required="required" class="form-control">
-                                            <option value="">Select an option</option>
-                                            <option value="admin" {% if users.role.role == 'admin' %} selected {% endif %}>An Admin</option>
-                                            <option value="user" {% if users.role.role == 'user' %} selected {% endif %}>A User</option>
-                                        </select>
-                                    </div>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Role</label>
+                                <div class="col-sm-10">
+                                    <select name="role" id="role" required="required" class="form-control"
+                                        {% if request.user.username == users.username %} disabled {% endif %}>
+                                        <option value="">Select an option</option>
+                                        <option value="admin" {% if users.role.role == 'admin' %} selected {% endif %}>
+                                            An Admin</option>
+                                        <option value="user" {% if users.role.role == 'user' %} selected {% endif %}>A
+                                            User</option>
+                                    </select>
                                 </div>
-                            </fieldset>
+                            </div>
+                        </fieldset>
 
-                            <fieldset>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">
-                                    </label>
-                                    <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-info btn-fill">Update</button>
-                                    </div>
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">
+                                </label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-info btn-fill">Update</button>
                                 </div>
-                            </fieldset>
-                        </div>
-                    </form>
-                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 {% endblock content %}
 {% block script %}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#editUserFormValidation').validate()
-        });
-    </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#editUserFormValidation').validate()
+    });
+</script>
 {% endblock script %}
