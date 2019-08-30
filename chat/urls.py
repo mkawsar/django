@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from .views import *
+from .views import ChatIndex, broadcast, conversations, delivered
 
 urlpatterns = [
     path('', ChatIndex.as_view(), name='chat-index'),

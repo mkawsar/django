@@ -9,10 +9,10 @@ from django.views import generic
 
 # Instantiate pusher
 pusher = Pusher(
-    app_id=os.getenv('PUSHER_APP_ID'),
-    key=os.getenv('PUSHER_APP_KEY'),
-    secret=os.getenv('PUSHER_APP_SECRET'),
-    cluster=os.getenv('PUSHER_APP_CLUSTER')
+    app_id=os.environ.get('PUSHER_APP_ID'),
+    key=os.environ.get('PUSHER_KEY'),
+    secret=os.environ.get('PUSHER_SECRET'),
+    cluster=os.environ.get('PUSHER_CLUSTER')
 )
 
 
