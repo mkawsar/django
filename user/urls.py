@@ -9,4 +9,5 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('group/', include('group.urls')),
     path('chat/', include('chat.urls')),
+    path('company/', include('companies.urls')),
 ]

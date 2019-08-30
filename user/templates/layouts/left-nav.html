@@ -5,6 +5,7 @@
 {% url 'user-add' as add_user_url %}
 {% url 'group-index' as group_url %}
 {% url 'chat-index' as chat_url %}
+{% url 'company-list' as company_url %}
 <div class="sidebar" data-background-color="brown" data-active-color="danger">
     <div class="logo">
         <a href="/" class="simple-text logo-mini">CU</a>
@@ -51,12 +52,14 @@
                 </a>
             </li>
 
-            <li {% if request.get_full_path == setting_url or request.get_full_path == add_user_url or request.get_full_path == add_user_url %}class="active"{% endif %}>
-                <a href="{% url 'setting-index' %}">
-                    <i class="fa fa-gear"></i>
-                    <p>Setting</p>
-                </a>
-            </li>
+            {% if request.user.role.role == 'admin' %}
+                <li {% if request.get_full_path == setting_url or request.get_full_path == add_user_url or request.get_full_path == add_user_url %}class="active"{% endif %}>
+                    <a href="{% url 'setting-index' %}">
+                        <i class="fa fa-gear"></i>
+                        <p>Setting</p>
+                    </a>
+                </li>
+            {% endif %}
 
             <li {% if request.get_full_path == blog_url %}class="active"{% endif %}>
                 <a href="{% url 'blog-home' %}">
@@ -75,6 +78,12 @@
                 <a href="{% url 'chat-index' %}">
                     <i class="fa fa-commenting-o"></i>
                     <p>Chat</p>
+                </a>
+            </li>
+            <li {% if request.get_full_path == company_url %}class="active"{% endif %}>
+                <a href="{% url 'company-list' %}">
+                    <i class="fa fa-building-o"></i>
+                    <p>Company</p>
                 </a>
             </li>
         </ul>
