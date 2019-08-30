@@ -7,12 +7,12 @@ from .models import *
 from django.contrib.auth.models import User
 from django.views import generic
 
-# instantiate pusher
+# Instantiate pusher
 pusher = Pusher(
     app_id=os.getenv('PUSHER_APP_ID'),
-    key=os.getenv('PUSHER_KEY'),
-    secret=os.getenv('PUSHER_SECRET'),
-    cluster=os.getenv('PUSHER_CLUSTER')
+    key=os.getenv('PUSHER_APP_KEY'),
+    secret=os.getenv('PUSHER_APP_SECRET'),
+    cluster=os.getenv('PUSHER_APP_CLUSTER')
 )
 
 
@@ -55,7 +55,6 @@ def conversations(request):
 @csrf_exempt
 def delivered(request, id):
     message = Conversation.objects.get(pk=id)
-    print('id::  ' + id)
     # verify it is not the same user who sent the message that wants to trigger a delivered event
     if request.user.id != message.user.id:
         socket_id = request.POST.get('socket_id', '')
