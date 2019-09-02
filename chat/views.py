@@ -9,10 +9,10 @@ from django.views import generic
 
 # Instantiate pusher
 pusher = Pusher(
-    app_id=os.environ.get('PUSHER_APP_ID'),
-    key=os.environ.get('PUSHER_KEY'),
-    secret=os.environ.get('PUSHER_SECRET'),
-    cluster=os.environ.get('PUSHER_CLUSTER')
+    app_id=os.environ.get("PUSHER_APP_ID"),
+    key=os.environ.get("PUSHER_APP_KEY"),
+    secret=os.environ.get("PUSHER_APP_SECRET"),
+    cluster=os.environ.get("PUSHER_APP_CLUSTER")
 )
 
 
@@ -31,10 +31,12 @@ class ChatIndex(LoginRequiredMixin, generic.TemplateView):
 @csrf_exempt
 def broadcast(request):
     # collect the message from the post parameters, and save to the database
-    message = Conversation(message=request.POST.get('message', ''), status='', user=request.user)
+    message = Conversation(message=request.POST.get(
+        'message', ''), status='', user=request.user)
     message.save()
     # create an dictionary from the message instance so we can send only required details to pusher
-    message = {'name': message.user.username, 'status': message.status, 'message': message.message, 'id': message.id}
+    message = {'name': message.user.username, 'status': message.status,
+               'message': message.message, 'id': message.id}
     # trigger the message, channel and event to pusher
     pusher.trigger(u'a_channel', u'an_event', message)
     # return a json response of the broadcasted message
