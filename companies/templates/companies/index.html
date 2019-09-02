@@ -1,4 +1,41 @@
 {% extends 'layouts/main.html' %}
 {% block content %}
-    hello world
-{% endblock %}
+<div class="container-fluid">
+    {% include 'layouts/alert-message.html' %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header pull-right">
+                    <a href="{% url 'company:create' %}" class="btn btn-sm btn-info">Add Company</a>
+                </div>
+                <div class="card-content table-responsive table-full-width">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Motto</th>
+                                <th>Type</th>
+                                <th class="text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for company in companies %}
+                            <tr>
+                                <td>{{ company.name }}</td>
+                                <td>{{ company.location }}</td>
+                                <td>{{ company.motto }}</td>
+                                <td>{{ company.type }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-circle btn-sm btn-danger"><i
+                                            class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
