@@ -1,16 +1,16 @@
 {% extends 'layouts/main.html' %}
 {% block content %}
-<div class="container-fluid">
-    {% include 'layouts/alert-message.html' %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header pull-right">
-                    <a href="{% url 'user-add' %}" class="btn btn-sm btn-info">Add User</a>
-                </div>
-                <div class="card-content table-responsive table-full-width">
-                    <table class="table">
-                        <thead>
+    <div class="container-fluid">
+        {% include 'layouts/alert-message.html' %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header pull-right">
+                        <a href="{% url 'user-add' %}" class="btn btn-sm btn-info">Add User</a>
+                    </div>
+                    <div class="card-content table-responsive table-full-width">
+                        <table class="table">
+                            <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Username</th>
@@ -18,49 +18,72 @@
                                 <th>Role</th>
                                 <th class="text-right">Actions</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             {% for value in users %}
-                            <tr>
-                                <td>{{ value.first_name }} {{ value.last_name }}</td>
-                                <td>{{ value.username }}</td>
-                                <td>{{ value.email }}</td>
-                                <td>{{ value.role.role|title }}</td>
-                                <td class="td-actions text-right">
-                                    <a href="{% url 'user-details' value.id %}" rel="tooltip" title=""
-                                        class="btn btn-info btn-simple btn-xs" data-original-title="View Profile"><i
-                                            class="ti-user"></i>
-                                    </a>
-                                    <a href="{% url 'user-edit' value.id %}" rel="tooltip" title=""
-                                        class="btn btn-success btn-simple btn-xs" data-original-title="Edit Profile">
-                                        <i class="ti-pencil-alt"></i>
-                                    </a>
-                                    {% if user.username != value.username %}
-                                    <a href="{% url 'user-delete' value.id %}" rel="tooltip" title=""
-                                        class="btn btn-danger btn-simple btn-xs confirm" data-original-title="Remove">
-                                        <i class="ti-close"></i>
-                                    </a>
-                                    {% endif %}
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>{{ value.first_name }} {{ value.last_name }}</td>
+                                    <td>{{ value.username }}</td>
+                                    <td>{{ value.email }}</td>
+                                    <td>{{ value.role.role|title }}</td>
+                                    <td class="td-actions text-right">
+                                        <a href="{% url 'user-details' value.id %}" rel="tooltip" title=""
+                                           class="btn btn-info btn-simple btn-xs" data-original-title="View Profile"><i
+                                                class="ti-user"></i>
+                                        </a>
+                                        <a href="{% url 'user-edit' value.id %}" rel="tooltip" title=""
+                                           class="btn btn-success btn-simple btn-xs" data-original-title="Edit Profile">
+                                            <i class="ti-pencil-alt"></i>
+                                        </a>
+                                        {% if user.username != value.username %}
+                                            <a href="{% url 'user-delete' value.id %}" rel="tooltip" title=""
+                                               class="btn btn-danger btn-simple btn-xs confirm"
+                                               data-original-title="Remove">
+                                                <i class="ti-close"></i>
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
                             {% endfor %}
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                        {% if is_paginated %}
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                                {% else %}
+                                    <li class="disabled"><span>&laquo;</span></li>
+                                {% endif %}
+                                {% for i in paginator.page_range %}
+                                    {% if page_obj.number == i %}
+                                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                                        </li>
+                                    {% else %}
+                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                                {% else %}
+                                    <li class="disabled"><span>&raquo;</span></li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock content %}
 {% block script %}
-<script>
-    $(document).ready(function () {
-        $(".confirm").confirm({
-            text: "Are you sure you want to delete this data?",
-            confirmButtonClass: "btn-danger",
-            cancelButtonClass: "btn-default",
-            dialogClass: "modal-dialog" // Bootstrap classes for large modal
+    <script>
+        $(document).ready(function () {
+            $(".confirm").confirm({
+                text: "Are you sure you want to delete this data?",
+                confirmButtonClass: "btn-danger",
+                cancelButtonClass: "btn-default",
+                dialogClass: "modal-dialog" // Bootstrap classes for large modal
+            });
         });
-    });
-</script>
+    </script>
 {% endblock script %}
