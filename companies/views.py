@@ -38,3 +38,20 @@ class CompanyCreateView(LoginRequiredMixin, generic.CreateView):
         context = super(CompanyCreateView, self).get_context_data(**kwargs)
         context['title'] = 'Company Create'
         return context
+
+
+# Company information delete view
+@login_required()
+def delete(request, id):
+    try:
+        company = Companies.objects.get(pk=id)
+        company.delete()
+        messages.success(request, 'Company information delete successfully!')
+        return redirect('company:list')
+    except Companies.DoesNotExist:
+        messages.error(request, 'Company information does not exist!')
+        return redirect('company:list')
+    except Exception as e:
+        print(e)
+        messages.error(request, 'Failed to delete company information!')
+        return redirect('company:list')

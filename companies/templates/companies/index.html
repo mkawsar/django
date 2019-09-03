@@ -1,16 +1,16 @@
 {% extends 'layouts/main.html' %}
 {% block content %}
-<div class="container-fluid">
-    {% include 'layouts/alert-message.html' %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header pull-right">
-                    <a href="{% url 'company:create' %}" class="btn btn-sm btn-info">Add Company</a>
-                </div>
-                <div class="card-content table-responsive table-full-width">
-                    <table class="table">
-                        <thead>
+    <div class="container-fluid">
+        {% include 'layouts/alert-message.html' %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header pull-right">
+                        <a href="{% url 'company:create' %}" class="btn btn-sm btn-info">Add Company</a>
+                    </div>
+                    <div class="card-content table-responsive table-full-width">
+                        <table class="table">
+                            <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Location</th>
@@ -18,24 +18,41 @@
                                 <th>Type</th>
                                 <th class="text-right">Actions</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             {% for company in companies %}
-                            <tr>
-                                <td>{{ company.name }}</td>
-                                <td>{{ company.location }}</td>
-                                <td>{{ company.motto }}</td>
-                                <td>{{ company.type }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-circle btn-sm btn-danger"><i
-                                            class="fa fa-trash-o"></i></a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>{{ company.name }}</td>
+                                    <td>{{ company.location }}</td>
+                                    <td>{{ company.motto }}</td>
+                                    <td>{{ company.type|title }}</td>
+                                    <td class="text-right">
+                                        <a href="{% url 'company:delete' company.id %}" class="btn btn-circle btn-sm btn-danger confirm"><i
+                                                class="fa fa-trash-o"></i></a>
+                                        <a href="#" class="btn btn-circle btn-sm btn-info"><i
+                                                class="fa fa-eye-slash"></i></a>
+                                        <a href="#" class="btn btn-circle btn-sm btn-warning"><i
+                                                class="fa fa-pencil-square-o"></i></a>
+                                    </td>
+                                </tr>
                             {% endfor %}
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    {% endblock %}
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $(".confirm").confirm({
+                text: "Are you sure you want to delete this data?",
+                confirmButtonClass: "btn-danger",
+                cancelButtonClass: "btn-default",
+                dialogClass: "modal-dialog" // Bootstrap classes for large modal
+            });
+        });
+    </script>
+{% endblock %}

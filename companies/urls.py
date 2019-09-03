@@ -1,8 +1,9 @@
 from django.urls import path, include
-from .views import IndexListView, CompanyCreateView
+from . import views
 app_name = 'company'
 
 urlpatterns = [
-    path('list', IndexListView.as_view(), name='list'),
-    path('create', CompanyCreateView.as_view(), name='create'),
+    path('list', views.IndexListView.as_view(), name='list'),
+    path('create', views.CompanyCreateView.as_view(), name='create'),
+    path('delete/<id>', views.delete, name='delete'),
 ]
