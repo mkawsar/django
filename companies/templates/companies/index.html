@@ -27,17 +27,21 @@
                                     <td>{{ company.motto }}</td>
                                     <td>{{ company.type|title }}</td>
                                     <td class="text-right">
-                                        <a href="{% url 'company:delete' company.id %}" class="btn btn-circle btn-sm btn-danger confirm"><i
+                                        <a href="{% url 'company:delete' company.id %}"
+                                           class="btn btn-circle btn-sm btn-danger confirm"><i
                                                 class="fa fa-trash-o"></i></a>
                                         <a href="#" class="btn btn-circle btn-sm btn-info"><i
                                                 class="fa fa-eye-slash"></i></a>
-                                        <a href="#" class="btn btn-circle btn-sm btn-warning"><i
+                                        <a href="{% url 'company:update' company.slug %}" class="btn btn-circle btn-sm btn-warning"><i
                                                 class="fa fa-pencil-square-o"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
+                        {% if is_paginated %}
+                            {% include "layouts/paginate.html" with page_obj=page_obj paginator=paginator %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

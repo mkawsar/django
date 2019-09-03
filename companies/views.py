@@ -11,6 +11,7 @@ class IndexListView(LoginRequiredMixin, generic.ListView):
     template_name = 'companies/index.html'
     model = Companies
     context_object_name = 'companies'
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(IndexListView, self).get_context_data(**kwargs)
@@ -55,3 +56,21 @@ def delete(request, id):
         print(e)
         messages.error(request, 'Failed to delete company information!')
         return redirect('company:list')
+
+
+# Company information update
+class CompanyUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'companies/edit.html'
+    model = Companies
+    fields = ['name', 'description', 'location', 'motto', 'type', 'picture']
+    success_url = '/company/list'
+    context_object_name = 'company'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Company information updated successfully!')
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(CompanyUpdateView, self).get_context_data(**kwargs)
+        context['title'] = 'Update Company Info'
+        return context
