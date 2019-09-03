@@ -74,3 +74,15 @@ class CompanyUpdateView(LoginRequiredMixin, generic.UpdateView):
         context = super(CompanyUpdateView, self).get_context_data(**kwargs)
         context['title'] = 'Update Company Info'
         return context
+
+
+# Company details view
+class CompanyDetailsView(LoginRequiredMixin, generic.DetailView):
+    template_name = 'companies/details.html'
+    model = Companies
+    context_object_name = 'company'
+
+    def get_context_data(self, **kwargs):
+        context = super(CompanyDetailsView, self).get_context_data(**kwargs)
+        context['title'] = 'Company Details'
+        return context

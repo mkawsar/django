@@ -1,0 +1,50 @@
+{% extends 'layouts/main.html' %}
+{% block content %}
+    <div class="container-fluid">
+        {% include 'layouts/alert-message.html' %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="text-center">
+                            <img src="{{ company.picture.url }}" alt="background"
+                                 class="img-responsive center-block">
+                        </div>
+
+                        <div class="text-left">
+                            <h4 class="widget-content widget-content-image-bottom widget-content-light clearfix">
+                                {% if request.user.id == company.creator_id %}
+                                    <a href="{% url 'company:delete' company.id %}"
+                                       class="btn btn-sm btn-danger pull-right confirm">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="{% url 'company:update' company.slug %}"
+                                       class="btn btn-sm btn-info pull-right">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                {% endif %}
+                                <a href="javascript:void(0)"
+                                   class="themed-color-default"><strong>{{ company.name }}</strong>
+                                    <br>
+                                    <small class="text-success">{{ company.motto }}</small></a><br>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <p><b>Company Description</b> :</p>
+                    </div>
+                    <div class="card-content">
+                        {{ company.description|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
