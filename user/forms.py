@@ -24,7 +24,3 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
-
-
-class RoleUpdateForm(forms.ModelForm):
-    pass

@@ -1,3 +1,6 @@
 *
 !.gitignore
 !default.jpg
+!no-image.jpg
+!group_img/
+!company_img/

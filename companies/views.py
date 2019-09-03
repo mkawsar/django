@@ -1,5 +1,6 @@
 from .models import Companies
 from django.views import generic
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -16,7 +17,24 @@ class IndexListView(LoginRequiredMixin, generic.ListView):
         context['title'] = 'Company List'
         return context
 
+
 # Create a company information
-@login_required
-def create(request):
-    return render(request, 'companies/add.html', {'title': 'Company Create'})
+class CompanyCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Companies
+    fields = ['name', 'description', 'location', 'motto', 'type', 'picture']
+    template_name = 'companies/add.html'
+    success_url = '/company/list'
+
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        messages.success(self.request, 'Company information created successfully!')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Failed to create company information!')
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(CompanyCreateView, self).get_context_data(**kwargs)
+        context['title'] = 'Company Create'
+        return context
