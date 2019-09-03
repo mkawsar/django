@@ -27,13 +27,17 @@
                                     <td>{{ company.motto }}</td>
                                     <td>{{ company.type|title }}</td>
                                     <td class="text-right">
-                                        <a href="{% url 'company:delete' company.id %}"
-                                           class="btn btn-circle btn-sm btn-danger confirm"><i
-                                                class="fa fa-trash-o"></i></a>
-                                        <a href="{% url 'company:details' company.slug %}" class="btn btn-circle btn-sm btn-info"><i
+                                        {% if request.user.id == company.creator.id %}
+                                            <a href="{% url 'company:delete' company.id %}"
+                                               class="btn btn-circle btn-sm btn-danger confirm"><i
+                                                    class="fa fa-trash-o"></i></a>
+                                            <a href="{% url 'company:update' company.slug %}"
+                                               class="btn btn-circle btn-sm btn-warning"><i
+                                                    class="fa fa-pencil-square-o"></i></a>
+                                        {% endif %}
+                                        <a href="{% url 'company:details' company.slug %}"
+                                           class="btn btn-circle btn-sm btn-info"><i
                                                 class="fa fa-eye-slash"></i></a>
-                                        <a href="{% url 'company:update' company.slug %}" class="btn btn-circle btn-sm btn-warning"><i
-                                                class="fa fa-pencil-square-o"></i></a>
                                     </td>
                                 </tr>
                             {% endfor %}
