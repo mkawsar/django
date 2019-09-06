@@ -3,7 +3,6 @@
 # Project Requirements
 1. Python 3
 2. Pip
-3. Web Server (Ex. Apache, Ngnix)
 4. PostgreSQL
 5. pgAdmin (Optional)
 6. psycopg2 (if not install in your local environment)
@@ -37,3 +36,14 @@
  5. Finally run project
  
     `python3 manage.py runserver`
+ 6. Add pusher credentials in environment file
+    
+    `PUSHER_APP_ID`
+    `PUSHER_APP_KEY`
+    `PUSHER_APP_SECRET`
+    `PUSHER_APP_CLUSTER`
+
+# Finally production host with server
+ 1. Production server is ready with apache2
+ 2. apache2 config file in production directory
+ 3. `production/apache config.conf` replace with `/etc/apache2/sites-available/000-default.conf`
